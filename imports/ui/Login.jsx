@@ -6,6 +6,7 @@ import * as UI from "./components";
 
 export const Login = ({ user, setUser, users }) => {
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = ({ target: { name, value } }) => {
     setError("");
@@ -13,46 +14,59 @@ export const Login = ({ user, setUser, users }) => {
   };
 
   const handleSubmit = (event) => {
+    setIsLoading(true);
+    setError('');
     event.preventDefault();
+    let foundRole = undefined;
     users.forEach(({ login, passwordHash, role }) => {
-      let error = "Wrong login/pass";
       if (login === user.login && passwordHash === md5(user.pass)) {
-        const newUser = { ...user, role, pass: md5(user.pass) };
-        localStorage.setItem('user', JSON.stringify(newUser));
-        setUser(newUser);
-        error = "";
+        foundRole = role; 
       }
-      setError(error);
     });
+    setTimeout(() => {
+      setIsLoading(false);
+      if (foundRole) {
+        const newUser = { login: user.login, role: foundRole, pass: md5(user.pass) };
+        localStorage.setItem("u", encodeURI(JSON.stringify(newUser)));
+        setUser(newUser);
+      } else {
+        setError("Wrong login/pass");
+      }      
+    }, 1000);
   };
 
   return (
     <SC.Container>
-      <form onSubmit={handleSubmit}>
+      <SC.Form onSubmit={handleSubmit}>
         <UI.FlexColumn>
-          <h3>Enter your:</h3>
-          <label>
-            login:
+          <h3>Please sign in:</h3>
+          {error && <div>Error: {error}<br /><br /></div>}
+          <SC.FieldRow>
+            <label>login:</label>
             <input
               type="text"
               name="login"
               defaultValue={user.login}
               onChange={handleChange}
+              disabled={isLoading}
             />
-          </label>
-          <label>
-            password:
+          </SC.FieldRow>
+          <hr />
+          <SC.FieldRow>
+            <label>password:</label>
             <input
               type="password"
               name="pass"
               defaultValue={user.pass}
               onChange={handleChange}
+              disabled={isLoading}
             />
-          </label>
-          <button type="submit">Sign in</button>
-          {error && <div>Error: {error}</div>}
+          </SC.FieldRow>
+          <hr />
+          {!isLoading && <button type="submit">Sign in</button>}
+          {isLoading && <span>Loading...</span>}
         </UI.FlexColumn>
-      </form>
+      </SC.Form>
     </SC.Container>
   );
 };

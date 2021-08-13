@@ -12,17 +12,22 @@ export const App = () => {
     login: undefined,
     pass: undefined,
     role: undefined,
-    error: undefined,
   };
   const [ user, setUser ] = useState(undefinedUser);
 
+  const logout = () => {
+    localStorage.removeItem('u');
+    setUser({ ...undefinedUser });
+  };
+
   useEffect(() => {
-    const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : undefined;
+    const user = localStorage.getItem('u') ? JSON.parse(decodeURI(localStorage.getItem('u'))) : undefined;
     if (user && user.role) {
+      console.log('=== user has role ===');
       setUser(user);
     }
   }, []);
-
+  
   if (!user.role) {
     return <Login user={user} users={users} setUser={setUser}/>;
   }
@@ -39,6 +44,9 @@ export const App = () => {
           </li>
           <li>
             <Link to="/dashboard">Dashboard</Link>
+          </li>
+          <li>
+            <button onClick={logout}>Logout</button>
           </li>
         </ul>
         <hr />
