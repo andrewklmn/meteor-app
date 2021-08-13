@@ -14,14 +14,15 @@ export const Login = ({ user, setUser, users }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    setError("");
     users.forEach(({ login, passwordHash, role }) => {
       let error = "Wrong login/pass";
       if (login === user.login && passwordHash === md5(user.pass)) {
-        setUser({ ...user, role });
+        const newUser = { ...user, role, pass: md5(user.pass) };
+        localStorage.setItem('user', JSON.stringify(newUser));
+        setUser(newUser);
         error = "";
       }
-      setTimeout(() => setError(error), 300);
+      setError(error);
     });
   };
 
@@ -35,7 +36,7 @@ export const Login = ({ user, setUser, users }) => {
             <input
               type="text"
               name="login"
-              value={user.login}
+              defaultValue={user.login}
               onChange={handleChange}
             />
           </label>
@@ -44,7 +45,7 @@ export const Login = ({ user, setUser, users }) => {
             <input
               type="password"
               name="pass"
-              value={user.pass}
+              defaultValue={user.pass}
               onChange={handleChange}
             />
           </label>

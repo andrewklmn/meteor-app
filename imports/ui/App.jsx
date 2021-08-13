@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { useTracker } from "meteor/react-meteor-data";
 import { UsersCollection } from "/imports/api/UsersCollection";
@@ -15,6 +15,13 @@ export const App = () => {
     error: undefined,
   };
   const [ user, setUser ] = useState(undefinedUser);
+
+  useEffect(() => {
+    const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : undefined;
+    if (user && user.role) {
+      setUser(user);
+    }
+  }, []);
 
   if (!user.role) {
     return <Login user={user} users={users} setUser={setUser}/>;
@@ -50,14 +57,6 @@ export const App = () => {
     </Router>
   );
 };
-
-function Home() {
-  return (
-    <div>
-      <h2>Home</h2>
-    </div>
-  );
-}
 
 function About() {
   return (
