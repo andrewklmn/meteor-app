@@ -1,57 +1,76 @@
-import React, { useState } from 'react';
-import { useTracker } from 'meteor/react-meteor-data';
-import { TasksCollection } from '/imports/api/TasksCollection';
-import { Task } from './Task';
-import { TaskForm } from './TaskForm';
+import React, { useState } from "react";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { useTracker } from "meteor/react-meteor-data";
+import { UsersCollection } from "/imports/api/UsersCollection";
+import { Todos } from "./Todos";
+import { Login } from "./Login";
 
-const toggleChecked = ({ _id, isChecked }) => {
-  TasksCollection.update(_id, {
-    $set: {
-      isChecked: !isChecked
-    }
-  })
-};
-
-const deleteTask = ({ _id }) => TasksCollection.remove(_id);
- 
 export const App = () => {
 
-  const hideCompletedFilter = { isChecked: { $ne: true } };
-  const [hideCompleted, setHideCompleted] = useState(false);
-  const tasks = useTracker(() =>
-    TasksCollection.find(hideCompleted ? hideCompletedFilter : {}, {
-      sort: { createdAt: -1 },
-    }).fetch()
-  );
- 
-  return (
-    <div className="app">
-      <header>
-        <div className="app-bar">
-          <div className="app-header">
-          <h1>📝️ To Do List</h1>
-          </div>
-        </div>
-      </header>
+  const users = useTracker(() => UsersCollection.find().fetch());
+  const undefinedUser = {
+    login: undefined,
+    pass: undefined,
+    role: undefined,
+    error: undefined,
+  };
+  const [ user, setUser ] = useState(undefinedUser);
 
-      <div className="main">
-        <TaskForm />
-        <div className="filter">
-         <button onClick={() => setHideCompleted(!hideCompleted)}>
-           {hideCompleted ? 'Show All' : 'Hide Completed'}
-         </button>
-       </div>
-        <ul className="tasks">
-          {tasks.map(task => (
-            <Task
-              key={task._id}
-              task={task}
-              onCheckboxClick={toggleChecked}
-              onDeleteClick={deleteTask}
-            />
-          ))}
+  if (!user.role) {
+    return <Login user={user} users={users} setUser={setUser}/>;
+  }
+
+  return (
+    <Router>
+      <div>
+        <ul>
+          <li>
+            <Link to="/">Home</Link>
+          </li>
+          <li>
+            <Link to="/about">About</Link>
+          </li>
+          <li>
+            <Link to="/dashboard">Dashboard</Link>
+          </li>
         </ul>
+        <hr />
+        <Switch>
+          <Route exact path="/">
+            <Todos />
+          </Route>
+          <Route path="/about">
+            <About />
+          </Route>
+          <Route path="/dashboard">
+            <Dashboard />
+          </Route>
+        </Switch>
       </div>
-    </div>
+    </Router>
   );
 };
+
+function Home() {
+  return (
+    <div>
+      <h2>Home</h2>
+    </div>
+  );
+}
+
+function About() {
+  return (
+    <div>
+      <h2>About</h2>
+    </div>
+  );
+}
+
+function Dashboard() {
+  return (
+    <div>
+      <h2>Dashboard</h2>
+    </div>
+  );
+}
