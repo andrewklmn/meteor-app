@@ -79,18 +79,17 @@ header {
 
 .task-form {
   display: flex;
-  margin: 16px;
+  margin: 5px 5px 0 5px;
 }
 
 .task-form > input {
   flex-grow: 1;
   box-sizing: border-box;
   padding: 10px 6px;
-  background: transparent;
   border: 1px solid #aaa;
   width: 100%;
   font-size: 1em;
-  margin-right: 16px;
+  margin-right: 5px;
 }
 
 .task-form > input:focus {
@@ -134,4 +133,37 @@ header {
 
 .filter > button {
   background-color: #62807e;
+}
+
+.money {
+  width: 70px !important;
+  text-align: right;
+}
+
+.income {
+  background-color: lightgreen;
+}
+
+.expence {
+  background-color: lightpink;
+}
+
+.date {
+  width: 100px !important;
+  text-align: center;
+  background-color: #FFA;
+}
+
+.comment {
+  background-color: #CCF;
+}
+
+.error {
+  width: 100%;
+  color: red;
+  text-align: center;
+}
+
+.disabled {
+  background-color: unset;
 }

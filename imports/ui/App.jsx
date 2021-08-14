@@ -2,13 +2,14 @@ import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { useTracker } from "meteor/react-meteor-data";
 import { UsersCollection } from "/imports/api/UsersCollection";
-import { Todos } from "./Todos";
+import { Payments } from "./Payments";
 import { Login } from "./Login";
 
 export const App = () => {
 
   const users = useTracker(() => UsersCollection.find().fetch());
   const undefinedUser = {
+    id: undefined,
     login: undefined,
     pass: undefined,
     role: undefined,
@@ -52,7 +53,7 @@ export const App = () => {
         <hr />
         <Switch>
           <Route exact path="/">
-            <Todos />
+            <Payments user={user} />
           </Route>
           <Route path="/about">
             <About />

@@ -18,15 +18,17 @@ export const Login = ({ user, setUser, users }) => {
     setError('');
     event.preventDefault();
     let foundRole = undefined;
-    users.forEach(({ login, passwordHash, role }) => {
+    let foundId = undefined;
+    users.forEach(({ _id, login, passwordHash, role }) => {
       if (login === user.login && passwordHash === md5(user.pass)) {
+        foundId = _id;
         foundRole = role; 
       }
     });
     setTimeout(() => {
       setIsLoading(false);
       if (foundRole) {
-        const newUser = { login: user.login, role: foundRole, pass: md5(user.pass) };
+        const newUser = { id: foundId, login: user.login, role: foundRole, pass: md5(user.pass) };
         localStorage.setItem("u", encodeURI(JSON.stringify(newUser)));
         setUser(newUser);
       } else {
