@@ -19,22 +19,24 @@ export const Login = ({ user, setUser, users }) => {
     event.preventDefault();
     let foundRole = undefined;
     let foundId = undefined;
+
     users.forEach(({ _id, login, passwordHash, role }) => {
       if (login === user.login && passwordHash === md5(user.pass)) {
         foundId = _id;
         foundRole = role; 
       }
     });
-    setTimeout(() => {
-      setIsLoading(false);
-      if (foundRole) {
-        const newUser = { id: foundId, login: user.login, role: foundRole, pass: md5(user.pass) };
-        localStorage.setItem("u", encodeURI(JSON.stringify(newUser)));
-        setUser(newUser);
-      } else {
+
+    if (foundRole) {
+      const newUser = { id: foundId, login: user.login, role: foundRole, pass: md5(user.pass) };
+      localStorage.setItem("u", encodeURI(JSON.stringify(newUser)));
+      setUser(newUser);
+    } else {
+      setTimeout (() => {
         setError("Wrong login/pass");
-      }      
-    }, 1000);
+        setIsLoading(false)
+      }, 1000);
+    };
   };
 
   return (

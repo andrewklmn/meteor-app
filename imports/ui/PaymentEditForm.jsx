@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { PaymentsCollection } from "/imports/api/PaymentsCollection";
+import { taxPercent } from '../constants/taxes';
 
 export const PaymentEditForm = ({ payment }) => {
   const [oldValue, setOldValue] = useState(payment);
@@ -48,8 +49,8 @@ export const PaymentEditForm = ({ payment }) => {
 
     if (
       !date ||
-      !(income && Number(income) >= 0) ||
-      !(expence && Number(expence) >= 0) ||
+      !(Number(income) >= 0) ||
+      !(Number(expence) >= 0) ||
       !comment
     ) {
       setError("Please fill in date, income, expence and comment");
@@ -80,6 +81,12 @@ export const PaymentEditForm = ({ payment }) => {
     handleSubmit(e);
   };
 
+  const handleKeyUp = (e) => {
+    if(e.keyCode === 13) {
+      e.target.blur();
+    }
+  }
+
   return (
     <>
       <form
@@ -95,6 +102,7 @@ export const PaymentEditForm = ({ payment }) => {
           onChange={(e) => setDate(e.target.value)}
           onBlur={handleBlur}
           onFocus={handleFocus}
+          onKeyUp={handleKeyUp}
         />
         <input
           type="text"
@@ -104,6 +112,7 @@ export const PaymentEditForm = ({ payment }) => {
           onChange={(e) => setIncome(e.target.value)}
           onBlur={handleBlur}
           onFocus={handleFocus}
+          onKeyUp={handleKeyUp}
         />
         <input
           type="text"
@@ -113,6 +122,7 @@ export const PaymentEditForm = ({ payment }) => {
           onChange={(e) => setExpence(e.target.value)}
           onBlur={handleBlur}
           onFocus={handleFocus}
+          onKeyUp={handleKeyUp}
         />
         <input
           type="text"
@@ -122,8 +132,14 @@ export const PaymentEditForm = ({ payment }) => {
           onChange={(e) => setComment(e.target.value)}
           onBlur={handleBlur}
           onFocus={handleFocus}
+          onKeyUp={handleKeyUp}
         />
-        {/* isRecordEdited() ? <button type="submit">Save</button> : "" */}
+        <input
+          type="text"
+          className="tax disabled"
+          readOnly
+          value={Math.round((income - expence) * taxPercent)/100}          
+        />
       </form>
       {error && <div className="error">{error}</div>}
     </>

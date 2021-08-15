@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { PaymentsCollection } from "/imports/api/PaymentsCollection";
 
-export const PaymentAddForm = ({ user }) => {
+export const PaymentAddForm = ({ user, handleClose }) => {
   const [date, setDate] = useState(new Date().toISOString().substr(0, 10));
   const [income, setIncome] = useState(0);
   const [expence, setExpence] = useState(0);
@@ -12,18 +12,18 @@ export const PaymentAddForm = ({ user }) => {
     setError('');
     e.preventDefault();
 
-    if (!date || !income || !expence || !comment) {
-      setError("Please fill in date, income and expence");
+    console.log(date);
+    console.log(income);
+    console.log(expence);
+    console.log(comment);
+
+    if (!date ||
+      !(Number(income) >= 0) ||
+      !(Number(expence) >= 0) ||
+      !comment) {
+      setError("Please fill in date, income, expence and comment");
       return;
     }
-
-    console.log({
-      createdAt: date,
-      userId: user.id,
-      income,
-      expence,
-      comment,
-    });
 
     PaymentsCollection.insert({
       createdAt: date,
@@ -33,15 +33,11 @@ export const PaymentAddForm = ({ user }) => {
       comment,
     });
 
-    setDate(new Date().toISOString().substr(0, 10));
-    setIncome(0);
-    setExpence(0);
-    setComment('');
+    handleClose();
   };
 
   return (
     <>
-      {error && <div className="error">{error}</div>}
       <form className="task-form" onSubmit={handleSubmit}>
         <input
           type="text"
@@ -72,6 +68,7 @@ export const PaymentAddForm = ({ user }) => {
         />
         <button type="submit">Add Payment</button>
       </form>
+      {error && <div className="error">{error}</div>}
     </>
   );
 };

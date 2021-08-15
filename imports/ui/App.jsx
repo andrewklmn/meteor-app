@@ -24,7 +24,6 @@ export const App = () => {
   useEffect(() => {
     const user = localStorage.getItem('u') ? JSON.parse(decodeURI(localStorage.getItem('u'))) : undefined;
     if (user && user.role) {
-      console.log('=== user has role ===');
       setUser(user);
     }
   }, []);
@@ -35,50 +34,33 @@ export const App = () => {
 
   return (
     <Router>
-      <div>
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/about">About</Link>
-          </li>
-          <li>
-            <Link to="/dashboard">Dashboard</Link>
-          </li>
-          <li>
-            <button onClick={logout}>Logout</button>
-          </li>
-        </ul>
-        <hr />
-        <Switch>
-          <Route exact path="/">
-            <Payments user={user} />
-          </Route>
-          <Route path="/about">
-            <About />
-          </Route>
-          <Route path="/dashboard">
-            <Dashboard />
-          </Route>
-        </Switch>
-      </div>
+      <Switch>
+        <Route exact path="/">
+          <Payments user={user} logout={logout}/>
+        </Route>
+        <Route path="/users">
+          <Users />
+        </Route>
+        <Route path="/profile">
+          <Profile />
+        </Route>
+      </Switch>
     </Router>
   );
 };
 
-function About() {
+function Users() {
   return (
     <div>
-      <h2>About</h2>
+      <h2>users</h2>
     </div>
   );
 }
 
-function Dashboard() {
+function Profile() {
   return (
     <div>
-      <h2>Dashboard</h2>
+      <h2>Profile</h2>
     </div>
   );
 }

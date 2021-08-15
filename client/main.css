@@ -30,18 +30,43 @@ button:focus {
   outline: 0;
 }
 
+#react-target {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+}
+
 .app {
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
+  width: 100%;
+  max-width: 800px;
   height: 100vh;
 }
 
 .app-header {
   flex-grow: 1;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
+.add-sign {
+  margin-left: 20px;
+  font-size: 1.5em;
+  cursor: pointer;
+}
+
+.add-sign:hover {
+  color: white;
+}
+
 
 .main {
   display: flex;
@@ -79,17 +104,17 @@ header {
 
 .task-form {
   display: flex;
-  margin: 5px 5px 0 5px;
+  margin: 0 5px 0 5px;
 }
 
 .task-form > input {
   flex-grow: 1;
   box-sizing: border-box;
-  padding: 10px 6px;
-  border: 1px solid #aaa;
+  padding: 5px 10px;
+  border: none;
+  border-bottom: 1px solid #aaa;
   width: 100%;
   font-size: 1em;
-  margin-right: 5px;
 }
 
 .task-form > input:focus {
@@ -136,7 +161,7 @@ header {
 }
 
 .money {
-  width: 70px !important;
+  width: 80px !important;
   text-align: right;
 }
 
@@ -156,6 +181,11 @@ header {
 
 .comment {
   background-color: #CCF;
+}
+
+.tax {
+  width: 80px !important;
+  text-align: right;
 }
 
 .error {
