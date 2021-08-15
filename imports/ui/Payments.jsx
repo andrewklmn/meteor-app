@@ -35,19 +35,19 @@ export const Payments = ({ admin, user }) => {
     });
   };
 
-  console.log(user);
-  console.log(admin);
+  const editable = admin && (admin === user.id );
 
   return (
     <div className="app">
       <div className="main">
-        {admin && (admin === user.id ) && <PaymentAddForm user={user} />}
+        {editable && <PaymentAddForm user={user} />}
         {payments.length === 0 && <Spinner />}
         {payments.length > 0 &&
           taxPlan.map((period, index) => {
             if (getQuarter() >= Number(3 - index)) {
               return (
                 <PaymentList
+                  editable={editable}
                   quarter={4 - index}
                   from={`${year}-${period[0]}`}
                   to={`${year}-${period[1]}`}
@@ -63,6 +63,7 @@ export const Payments = ({ admin, user }) => {
           })}
         {payments.length > 0 && (
           <PaymentList
+            editable={editable}
             quarter={4}
             from={`${year - 1}-${taxPlan[0][0]}`}
             to={`${year - 1}-${taxPlan[0][1]}`}

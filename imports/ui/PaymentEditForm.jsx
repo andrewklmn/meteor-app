@@ -3,7 +3,7 @@ import { PaymentsCollection } from "/imports/api/PaymentsCollection";
 import { taxPercent } from '../constants/taxes';
 import * as SC from "./PaymentEditForm.sc"; 
 
-export const PaymentEditForm = ({ payment }) => {
+export const PaymentEditForm = ({ payment, editable }) => {
   const [oldValue, setOldValue] = useState(payment);
   const [isEditor, setIsEditor] = useState(false);
   const [date, setDate] = useState(payment.createdAt.substr(0, 10));
@@ -100,6 +100,7 @@ export const PaymentEditForm = ({ payment }) => {
           onBlur={handleBlur}
           onFocus={handleFocus}
           onKeyUp={handleKeyUp}
+          readOnly={!editable}
         />
         <input
           type="text"
@@ -110,6 +111,7 @@ export const PaymentEditForm = ({ payment }) => {
           onBlur={handleBlur}
           onFocus={handleFocus}
           onKeyUp={handleKeyUp}
+          readOnly={!editable}
         />
         <input
           type="text"
@@ -120,6 +122,7 @@ export const PaymentEditForm = ({ payment }) => {
           onBlur={handleBlur}
           onFocus={handleFocus}
           onKeyUp={handleKeyUp}
+          readOnly={!editable}
         />
         <input
           type="text"
@@ -130,6 +133,7 @@ export const PaymentEditForm = ({ payment }) => {
           onBlur={handleBlur}
           onFocus={handleFocus}
           onKeyUp={handleKeyUp}
+          readOnly={!editable}
         />
         <input
           type="text"

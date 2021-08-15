@@ -3,7 +3,7 @@ import { PaymentEditForm } from "./PaymentEditForm";
 import { taxPercent } from "../constants/taxes";
 import * as SC from "./PaymentList.sc";
 
-export const PaymentList = ({ quarter, from, to, payments }) => {
+export const PaymentList = ({ editable, quarter, from, to, payments }) => {
   const incomeSum = payments.reduce(
     (prev, next) => prev + Number(next.income),
     0
@@ -26,7 +26,7 @@ export const PaymentList = ({ quarter, from, to, payments }) => {
         <SC.TaxHeader>Tax, {taxPercent}%</SC.TaxHeader>
       </SC.TableHeader>
       {[...payments].map((payment) => (
-        <PaymentEditForm key={payment._id} payment={payment} />
+        <PaymentEditForm key={payment._id} editable={editable} payment={payment} />
       ))}
       <SC.TableHeader>
         <SC.DateHeader>Total:</SC.DateHeader>
