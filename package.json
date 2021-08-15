@@ -6,7 +6,8 @@
     "test": "meteor test --once --driver-package meteortesting:mocha",
     "test-app": "TEST_WATCH=1 meteor test --full-app --driver-package meteortesting:mocha",
     "visualize": "meteor --production --extra-packages bundle-visualizer",
-    "build": "meteor build build --architecture os.linux.x86_64"
+    "build": "meteor build ../build --architecture os.linux.x86_64",
+    "start:built": "sudo MONGO_URL=mongodb://localhost:27017/fop ROOT_URL=http://localhost:80 PORT=80 node main.js"
   },
   "dependencies": {
     "@babel/runtime": "^7.11.2",
