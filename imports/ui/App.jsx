@@ -47,9 +47,7 @@ export const App = () => {
       </Router>
     );
   }
-
-  console.log(user);
-
+  
   if (user && user.role === "user") {
     return (
       <Router>

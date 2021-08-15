@@ -162,7 +162,7 @@ header {
 }
 
 .money {
-  width: 80px !important;
+  width: 20% !important;
   text-align: right;
 }
 
@@ -175,19 +175,26 @@ header {
 }
 
 .date {
-  width: 100px !important;
+  max-width: 20% !important;
   text-align: center;
   background-color: #FFA;
 }
 
 .comment {
-  width: 100%;
+  width: 20%;
   background-color: #CCF;
+  text-align: center;
+}
+
+.moneySubtotal {
+  width: 20%;
+  background-color: #CCF;
+  text-align: right;
 }
 
 .tax {
-  width: 80px !important;
-  text-align: right;
+  max-width: 20% !important;
+  text-align: center;
 }
 
 .error {
@@ -198,4 +205,10 @@ header {
 
 .disabled {
   background-color: unset;
+}
+
+@media screen and (max-width: 500px) {
+  body { 
+    font-size: 12px;
+  }
 }

@@ -47,6 +47,7 @@ export const Payments = ({ admin, user }) => {
             if (getQuarter() >= Number(3 - index)) {
               return (
                 <PaymentList
+                  key={year + JSON.stringify(period)}
                   editable={editable}
                   quarter={4 - index}
                   from={`${year}-${period[0]}`}

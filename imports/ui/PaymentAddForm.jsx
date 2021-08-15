@@ -13,11 +13,6 @@ export const PaymentAddForm = ({ user, handleClose }) => {
     setError('');
     e.preventDefault();
 
-    console.log(date);
-    console.log(income);
-    console.log(expence);
-    console.log(comment);
-
     if (!date ||
       !(Number(income) >= 0) ||
       !(Number(expence) >= 0) ||

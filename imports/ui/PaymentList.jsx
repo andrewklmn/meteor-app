@@ -13,30 +13,42 @@ export const PaymentList = ({ editable, quarter, from, to, payments }) => {
     0
   );
 
-  console.log(payments);
-
   return (
     <SC.Container>
-      <SC.Title>{quarter}-th quarter, from {from} to {to}</SC.Title>
+      <SC.Title>
+        Quarter #{quarter}: {from} &mdash; {to}
+      </SC.Title>
       <SC.TableHeader>
         <SC.DateHeader>Date</SC.DateHeader>
         <SC.MoneyHeader>Income</SC.MoneyHeader>
         <SC.MoneyHeader>Expence</SC.MoneyHeader>
-        <SC.CommentHeader>Comment</SC.CommentHeader>
+        {editable ? (
+          <SC.CommentHeader>Comment</SC.CommentHeader>
+        ) : (
+          <SC.SubtotalHeader>Subtotal</SC.SubtotalHeader>
+        )}
         <SC.TaxHeader>Tax, {taxPercent}%</SC.TaxHeader>
       </SC.TableHeader>
       {[...payments].map((payment) => (
-        <PaymentEditForm key={payment._id} editable={editable} payment={payment} />
+        <PaymentEditForm
+          key={payment._id}
+          editable={editable}
+          payment={payment}
+        />
       ))}
-      <SC.TableHeader>
-        <SC.DateHeader>Total:</SC.DateHeader>
-        <SC.MoneyHeader>{incomeSum}</SC.MoneyHeader>
-        <SC.MoneyHeader>{expenceSum}</SC.MoneyHeader>
-        <SC.CommentHeader>{quarter}-th quarter, {from} - {to}</SC.CommentHeader>
-        <SC.TaxHeader>
+      <SC.TableFooter>
+        <SC.DateTotal>Quarter #{quarter}:</SC.DateTotal>
+        <SC.MoneyTotal>{incomeSum}</SC.MoneyTotal>
+        <SC.MoneyTotal>{expenceSum}</SC.MoneyTotal>
+        {editable ? (
+          <SC.CommentTotal>Total:</SC.CommentTotal>
+        ) : (
+          <SC.SubtotalTotal>{Math.round((incomeSum - expenceSum) * 100) / 100}</SC.SubtotalTotal>
+        )}
+        <SC.TaxTotal>
           {Math.round((incomeSum - expenceSum) * taxPercent) / 100}
-        </SC.TaxHeader>
-      </SC.TableHeader>
+        </SC.TaxTotal>
+      </SC.TableFooter>
     </SC.Container>
   );
 };

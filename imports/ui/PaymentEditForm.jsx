@@ -124,17 +124,26 @@ export const PaymentEditForm = ({ payment, editable }) => {
           onKeyUp={handleKeyUp}
           readOnly={!editable}
         />
+        {editable ? (
+          <input
+            type="text"
+            className="comment disabled"
+            placeholder="Add your comment here"
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
+            onBlur={handleBlur}
+            onFocus={handleFocus}
+            onKeyUp={handleKeyUp}
+            readOnly={!editable}
+          />
+        ) : (
         <input
           type="text"
-          className="comment disabled"
-          placeholder="Add your comment here"
-          value={comment}
-          onChange={(e) => setComment(e.target.value)}
-          onBlur={handleBlur}
-          onFocus={handleFocus}
-          onKeyUp={handleKeyUp}
-          readOnly={!editable}
+          className="moneySubtotal disabled"
+          readOnly
+          value={Math.round((income - expence) * 100)/100}          
         />
+        )}
         <input
           type="text"
           className="tax disabled"
