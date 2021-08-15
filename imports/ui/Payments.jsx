@@ -5,9 +5,8 @@ import { PaymentAddForm } from "./PaymentAddForm";
 import { PaymentList } from "./PaymentList";
 import { taxPlan } from "../constants/taxes";
 import { Spinner } from "./Spinner";
-import { capitalizeFirstLetter } from "../helpers/capitalizeFirstLetter";
 
-export const Payments = ({ user }) => {
+export const Payments = ({ admin, user }) => {
   const year = new Date().toISOString().substr(0, 4);
   const payments = useTracker(() =>
     PaymentsCollection.find(
@@ -36,10 +35,13 @@ export const Payments = ({ user }) => {
     });
   };
 
+  console.log(user);
+  console.log(admin);
+
   return (
     <div className="app">
       <div className="main">
-        <PaymentAddForm user={user} />
+        {admin && (admin === user.id ) && <PaymentAddForm user={user} />}
         {payments.length === 0 && <Spinner />}
         {payments.length > 0 &&
           taxPlan.map((period, index) => {

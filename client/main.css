@@ -46,7 +46,7 @@ button:focus {
   max-width: 800px;
   height: calc(100vh - 60px);
   overflow-x: hidden;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 .app-header {
@@ -181,6 +181,7 @@ header {
 }
 
 .comment {
+  width: 100%;
   background-color: #CCF;
 }
 

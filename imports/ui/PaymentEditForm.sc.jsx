@@ -1,0 +1,24 @@
+import styled from '@emotion/styled'
+import * as LIB from './components';
+
+export const Form = styled.form`
+  display: flex;
+  flex-direction: row;
+  margin: 0 5px 0 5px;
+  width: 100%;
+  height: 32px;
+
+  & > input {
+    box-sizing: border-box;
+    padding: 5px 10px;
+    border: none;
+    border-bottom: 1px solid #aaa;
+    font-size: 1em;
+  }
+
+  & > button {
+    min-width: 120px;
+    height: 100%;
+    background-color: #315481;
+  }
+`;

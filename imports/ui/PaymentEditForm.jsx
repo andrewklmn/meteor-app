@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { PaymentsCollection } from "/imports/api/PaymentsCollection";
 import { taxPercent } from '../constants/taxes';
+import * as SC from "./PaymentEditForm.sc"; 
 
 export const PaymentEditForm = ({ payment }) => {
   const [oldValue, setOldValue] = useState(payment);
@@ -89,11 +90,7 @@ export const PaymentEditForm = ({ payment }) => {
 
   return (
     <>
-      <form
-        onKeyUp={cancelEditor}
-        className="task-form"
-        onSubmit={handleSubmit}
-      >
+      <SC.Form onKeyUp={cancelEditor} onSubmit={handleSubmit}>
         <input
           type="text"
           className="date disabled"
@@ -140,7 +137,7 @@ export const PaymentEditForm = ({ payment }) => {
           readOnly
           value={Math.round((income - expence) * taxPercent)/100}          
         />
-      </form>
+      </SC.Form>
       {error && <div className="error">{error}</div>}
     </>
   );

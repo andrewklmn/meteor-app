@@ -9,6 +9,7 @@ import { Navigation } from "./Navigation";
 import { Clients } from './Clients';
 
 export const App = () => {
+  const [client, setClient] = useState('');
   const users = useTracker(() => UsersCollection.find().fetch());
   const undefinedUser = {
     id: undefined,
@@ -40,7 +41,7 @@ export const App = () => {
     return (
       <Router>
         <Navigation user={user} />
-        <Payments user={user} />
+        <Payments user={user} admin={user.id}/>
         <Route path="/logout">
           <Logout logout={logout}/>;
         </Route>
@@ -53,11 +54,11 @@ export const App = () => {
       <Switch>
         <Route exact path="/">
           <Navigation user={user} />
-          <Clients user={user} />
+          <Clients user={user} client={client} setClient={setClient}/>
         </Route>
         <Route path="/payments">
           <Navigation user={user} />
-          <Payments user={user} />
+          <Payments user={user} admin={user.id}/>
         </Route>
         <Route path="/logout">
           <Logout logout={logout}/>;

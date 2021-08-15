@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { PaymentsCollection } from "/imports/api/PaymentsCollection";
+import * as SC from "./PaymentAddForm.sc"; 
 
 export const PaymentAddForm = ({ user, handleClose }) => {
   const [date, setDate] = useState(new Date().toISOString().substr(0, 10));
@@ -37,8 +38,8 @@ export const PaymentAddForm = ({ user, handleClose }) => {
   };
 
   return (
-    <>
-      <form className="task-form" onSubmit={handleSubmit}>
+    <SC.Container>
+      <SC.Form onSubmit={handleSubmit}>
         <input
           type="text"
           className="date"
@@ -62,13 +63,14 @@ export const PaymentAddForm = ({ user, handleClose }) => {
         />
         <input
           type="text"
+          className="comment"
           placeholder="Add your comment here"
           value={comment}
           onChange={(e) => setComment(e.target.value)}
         />
         <button type="submit">Add Payment</button>
-      </form>
+      </SC.Form>
       {error && <div className="error">{error}</div>}
-    </>
+    </SC.Container>
   );
 };
