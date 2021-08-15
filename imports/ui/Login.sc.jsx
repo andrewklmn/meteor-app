@@ -6,7 +6,7 @@ export const Container = styled(LIB.FlexColumn)`
     height: 100vh;
     font-size: 1.2em;
     color: white;
-
+    
     & input {
         width: 180px;
         font-size: 1em;
@@ -18,10 +18,18 @@ export const Container = styled(LIB.FlexColumn)`
 `;
 
 export const Form = styled.form`
+    padding: 20px;
     width: 270px;
+    color: black;
+    background-color: white;
+    border-radius: 15px;
 `;
 
 export const FieldRow = styled(LIB.FlexRow)`
     width: 100%;
     justify-content: space-between;
+`;
+
+export const Error = styled.div`
+    color: red;
 `;

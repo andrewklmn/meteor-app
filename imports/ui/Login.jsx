@@ -44,7 +44,7 @@ export const Login = ({ user, setUser, users }) => {
       <SC.Form onSubmit={handleSubmit}>
         <UI.FlexColumn>
           <h3>Please sign in:</h3>
-          {error && <div>Error: {error}<br /><br /></div>}
+          {error && <SC.Error>Error: {error}<br /><br /></SC.Error>}
           <SC.FieldRow>
             <label>login:</label>
             <input
