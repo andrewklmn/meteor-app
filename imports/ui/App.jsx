@@ -4,9 +4,11 @@ import { useTracker } from "meteor/react-meteor-data";
 import { UsersCollection } from "/imports/api/UsersCollection";
 import { Payments } from "./Payments";
 import { Login } from "./Login";
+import { Logout } from "./Logout";
+import { Navigation } from "./Navigation";
+import { Clients } from './Clients';
 
 export const App = () => {
-
   const users = useTracker(() => UsersCollection.find().fetch());
   const undefinedUser = {
     id: undefined,
@@ -32,35 +34,36 @@ export const App = () => {
     return <Login user={user} users={users} setUser={setUser}/>;
   }
 
+  console.log(user);
+
+  if (user && user.role === 'user') {
+    return (
+      <Router>
+        <Navigation user={user} />
+        <Payments user={user} />
+        <Route path="/logout">
+          <Logout logout={logout}/>;
+        </Route>
+      </Router>
+    );
+  }
+
   return (
     <Router>
       <Switch>
         <Route exact path="/">
-          <Payments user={user} logout={logout}/>
+          <Navigation user={user} />
+          <Clients user={user} />
         </Route>
-        <Route path="/users">
-          <Users />
+        <Route path="/payments">
+          <Navigation user={user} />
+          <Payments user={user} />
         </Route>
-        <Route path="/profile">
-          <Profile />
+        <Route path="/logout">
+          <Logout logout={logout}/>;
         </Route>
       </Switch>
     </Router>
   );
 };
 
-function Users() {
-  return (
-    <div>
-      <h2>users</h2>
-    </div>
-  );
-}
-
-function Profile() {
-  return (
-    <div>
-      <h2>Profile</h2>
-    </div>
-  );
-}

@@ -7,7 +7,7 @@ import { taxPlan } from "../constants/taxes";
 import { Spinner } from "./Spinner";
 import { capitalizeFirstLetter } from "../helpers/capitalizeFirstLetter";
 
-export const Payments = ({ user }) => {
+export const Clients = ({ user }) => {
   const year = new Date().toISOString().substr(0, 4);
   const payments = useTracker(() =>
     PaymentsCollection.find(
