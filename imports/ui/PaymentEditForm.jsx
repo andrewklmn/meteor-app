@@ -124,7 +124,7 @@ export const PaymentEditForm = ({ payment, editable }) => {
           onKeyUp={handleKeyUp}
           readOnly={!editable}
         />
-        {editable ? (
+        {editable && (
           <input
             type="text"
             className="comment disabled"
@@ -136,14 +136,13 @@ export const PaymentEditForm = ({ payment, editable }) => {
             onKeyUp={handleKeyUp}
             readOnly={!editable}
           />
-        ) : (
+        )}
         <input
           type="text"
           className="moneySubtotal disabled"
           readOnly
-          value={Math.round((income - expence) * 100)/100}          
+          value={Math.round((income - expence) * (editable ? 100 - taxPercent : 100)) /100}          
         />
-        )}
         <input
           type="text"
           className="tax disabled"

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { PaymentEditForm } from "./PaymentEditForm";
 import { taxPercent } from "../constants/taxes";
 import * as SC from "./PaymentList.sc";
+import { ukrMonths } from '../constants/ukrMonths';
 
 export const PaymentList = ({ editable, quarter, from, to, payments }) => {
   const incomeSum = payments.reduce(
@@ -12,36 +13,82 @@ export const PaymentList = ({ editable, quarter, from, to, payments }) => {
     (prev, next) => prev + Number(next.expence),
     0
   );
+  const year = from.substr(0, 4);
+  const startMonth = Number(from.substr(5, 2));
+  const stopMonth = Number(to.substr(5, 2));
+
+  const generateMothRange = (from, to) => {
+    const months = [];
+    for (let i = from; i <= to; i++) {
+      if (i < 10) {
+        months.push('0' + i);
+      } else {
+        months.push(String(i));
+      }
+    }
+    return months;
+  };
+
+  const months = generateMothRange(startMonth, stopMonth);
 
   return (
     <SC.Container>
       <SC.Title>
-        Quarter #{quarter}: {from} &mdash; {to}
+        {quarter}-й квартал {year}
       </SC.Title>
-      <SC.TableHeader>
-        <SC.DateHeader>Date</SC.DateHeader>
-        <SC.MoneyHeader>Income</SC.MoneyHeader>
-        <SC.MoneyHeader>Expence</SC.MoneyHeader>
         {editable ? (
-          <SC.CommentHeader>Comment</SC.CommentHeader>
+          <SC.TableHeader>
+            <SC.EditorDateHeader>Дата</SC.EditorDateHeader>
+            <SC.EditorMoneyHeader>Дохід</SC.EditorMoneyHeader>
+            <SC.EditorMoneyHeader>Повернення</SC.EditorMoneyHeader>
+            <SC.EditorCommentHeader>Опис</SC.EditorCommentHeader>
+            <SC.EditorSubtotalHeader>На руки</SC.EditorSubtotalHeader>
+            <SC.EditorTaxHeader>Податок</SC.EditorTaxHeader>
+          </SC.TableHeader>
         ) : (
-          <SC.SubtotalHeader>Subtotal</SC.SubtotalHeader>
+          <SC.TableHeader>
+            <SC.DateHeader>Дата</SC.DateHeader>
+            <SC.MoneyHeader>Дохід</SC.MoneyHeader>
+            <SC.MoneyHeader>Повернення</SC.MoneyHeader>
+            <SC.SubtotalHeader>Прибуток</SC.SubtotalHeader>
+            <SC.TaxHeader>Податок, {taxPercent}%</SC.TaxHeader>
+          </SC.TableHeader>
         )}
-        <SC.TaxHeader>Tax, {taxPercent}%</SC.TaxHeader>
-      </SC.TableHeader>
-      {[...payments].map((payment) => (
-        <PaymentEditForm
-          key={payment._id}
-          editable={editable}
-          payment={payment}
-        />
-      ))}
+      {months.map((month) => {
+        let monthIncome = 0;
+        let monthExpence = 0;
+        const list = payments.map((payment) => {
+          if (payment.createdAt.substr(5,2) !== month) return null;
+
+          monthIncome += Number(payment.income);
+          monthExpence += Number(payment.expence);
+
+          return (
+            <PaymentEditForm
+            key={payment._id}
+            editable={editable}
+            payment={payment}
+          />
+          );
+        });
+        const mothInfo = (<SC.TableFooter key={`${year}-${month}`}>
+          <SC.monthCommentTotal>
+            Всього за {ukrMonths[month]} {from.substr(0, 4)}-го:
+          </SC.monthCommentTotal>
+          <SC.monthSubtotalTotal>
+            {Math.round((monthIncome - monthExpence) * (editable ? 100 - taxPercent : 100)) /100}
+          </SC.monthSubtotalTotal>
+          <SC.monthTaxTotal>
+            {Math.round((monthIncome - monthExpence) * taxPercent) / 100}
+          </SC.monthTaxTotal>
+        </SC.TableFooter>);
+
+        return [... list, mothInfo];
+      })}
       <SC.TableFooter>
-        <SC.DateTotal>Quarter #{quarter}:</SC.DateTotal>
-        <SC.MoneyTotal>{incomeSum}</SC.MoneyTotal>
-        <SC.MoneyTotal>{expenceSum}</SC.MoneyTotal>
+        <SC.CommentTotal>Разом за {quarter}-й квартал {year}-го:</SC.CommentTotal>
         {editable ? (
-          <SC.CommentTotal>Total:</SC.CommentTotal>
+          <SC.SubtotalTotal>{Math.round((incomeSum - expenceSum) * (100 - taxPercent)) / 100}</SC.SubtotalTotal>
         ) : (
           <SC.SubtotalTotal>{Math.round((incomeSum - expenceSum) * 100) / 100}</SC.SubtotalTotal>
         )}

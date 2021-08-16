@@ -6,7 +6,7 @@ import { Payments } from "./Payments";
 import { Login } from "./Login";
 import { Logout } from "./Logout";
 import { Navigation } from "./Navigation";
-import { Clients } from "./Clients";
+import { Report } from "./Report";
 
 export const App = () => {
   const [client, setClient] = useState("");
@@ -69,7 +69,7 @@ export const App = () => {
       <Switch>
         <Route exact path="/">
           <Navigation user={user} />
-          <Clients user={user} client={client} setClient={setClient} />
+          <Report user={user} client={client} setClient={setClient} />
         </Route>
         <Route path="/payments">
           <Navigation user={user} />

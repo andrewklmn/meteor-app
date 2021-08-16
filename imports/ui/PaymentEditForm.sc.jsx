@@ -12,7 +12,8 @@ export const Form = styled.form`
     box-sizing: border-box;
     padding: 5px 10px;
     border: none;
-    border-bottom: 1px solid #aaa;
+    border-top: 1px solid #aaa;
+    border-right: 1px solid #aaa;
     font-size: 1em;
   }
 

@@ -28,3 +28,7 @@ export const Form = styled.form`
   }
 
 `;
+
+export const Button = styled.button`
+  width: 20% !important;
+`;

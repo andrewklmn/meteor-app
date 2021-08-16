@@ -24,9 +24,9 @@ export const DateHeader = styled(LIB.FlexColumn)`
   height: 100%;
 
   font-weight: 700;
-
   color: white;
   background-color: gray;
+  overflow-wrap: anywhere;
 `;
 
 export const MoneyHeader = styled(DateHeader)`
@@ -49,11 +49,39 @@ export const TaxHeader = styled(DateHeader)`
   align-items: center;
 `;
 
+export const EditorDateHeader = styled(LIB.FlexColumn)`
+  width: 16.6%;
+  height: 100%;
+
+  font-weight: 700;
+  color: white;
+  background-color: gray;
+  overflow-wrap: anywhere;
+`;
+
+export const EditorMoneyHeader = styled(EditorDateHeader)`
+  align-items: flex-end;
+`;
+
+export const EditorCommentHeader = styled(EditorDateHeader)`
+  align-items: center;
+`;
+
+export const EditorSubtotalHeader = styled(EditorDateHeader)`
+  align-items: center;
+`;
+
+export const EditorTaxHeader = styled(EditorDateHeader)`
+  align-items: center;
+`;
+
+
 export const TableFooter = styled(LIB.FlexRow)`
     justify-content: flex-start;
     margin: 0 5px 0 5px;
     width: 100%;
     height: 36px;
+    border-top: 1px solid #aaa;
 `;
 
 export const DateTotal = styled(DateHeader)`
@@ -67,8 +95,9 @@ export const MoneyTotal = styled(DateTotal)`
 `;
 
 export const CommentTotal = styled(DateTotal)`
-  width: 20%;
-  align-items: flex-end;
+  padding-left: 20px;
+  width: 60%;
+  align-items: flex-start;
 `;
 
 export const SubtotalTotal = styled(DateTotal)`
@@ -79,4 +108,23 @@ export const SubtotalTotal = styled(DateTotal)`
 export const TaxTotal = styled(DateTotal)`
   width: calc(20% + 10px);
   align-items: center;
+`;
+
+export const monthCommentTotal = styled(DateTotal)`
+  padding-left: 20px;
+  width: 60%;
+  align-items: flex-start;
+  font-weight: normal;
+`;
+
+export const monthSubtotalTotal = styled(DateTotal)`
+  width: 20%;
+  align-items: flex-end;
+  font-weight: normal;
+`;
+
+export const monthTaxTotal = styled(DateTotal)`
+  width: calc(20% + 10px);
+  align-items: center;
+  font-weight: normal;
 `;

@@ -13,7 +13,7 @@ body {
   padding: 0;
   margin: 0;
 
-  font-size: 14px;
+  font-size: 1em;
 }
 
 button {
@@ -44,10 +44,8 @@ button:focus {
   justify-content: flex-start;
   width: 100%;
   max-width: 800px;
-  height: calc(100vh - 60px);
   overflow-x: hidden;
-  overflow-y: auto;
-}
+};
 
 .app-header {
   flex-grow: 1;
@@ -73,8 +71,7 @@ button:focus {
 .main {
   display: flex;
   flex-direction: column;
-  flex-grow: 1;
-  background: white;
+  background: white;  
 }
 
 .main::-webkit-scrollbar {
@@ -97,7 +94,7 @@ header {
 }
 
 .app-bar h1 {
-  font-size: 1.5em;
+  font-size: 1.4em;
   margin: 0;
   display: inline-block;
   margin-right: 1em;
@@ -207,8 +204,28 @@ header {
   background-color: unset;
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 600px) {
   body { 
-    font-size: 12px;
+    font-size: 0.8em
+  }
+}
+
+.showOnPrint {
+  visibility: hidden;
+}
+
+.hideOnPrint {
+  visibility: visible;
+}
+
+@media print {
+  .showOnPrint {
+    visibility: visible;
+  }
+  .hideOnPrint {
+    visibility: hidden;
+  }
+  h3 {
+    page-break-before : auto;
   }
 }

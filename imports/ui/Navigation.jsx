@@ -5,21 +5,21 @@ import * as SC from "./Navigation.sc";
 
 export const Navigation = ({ user }) => {
   return (
-    <SC.Container className="header">
+    <SC.Container className="header hideOnPrint">
       <SC.Title>{capitalizeFirstLetter(user.login)}'s workspace</SC.Title>
       <SC.Menu>
         {user.role === "accountant" && (
           <SC.MenuItem>
-            <Link to="/">Clients</Link>
+            <Link to="/">Звіт</Link>
           </SC.MenuItem>
         )}
         {user.role === "accountant" && (
           <SC.MenuItem>
-            <Link to="/payments">My payments</Link>
+            <Link to="/payments">Мої платежі</Link>
           </SC.MenuItem>
         )}
         <SC.MenuItem>
-          <Link to="/logout">Exit</Link>
+          <Link to="/logout">Вийти</Link>
         </SC.MenuItem>
       </SC.Menu>
     </SC.Container>

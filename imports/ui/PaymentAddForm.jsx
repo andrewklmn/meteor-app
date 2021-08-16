@@ -33,37 +33,37 @@ export const PaymentAddForm = ({ user, handleClose }) => {
   };
 
   return (
-    <SC.Container>
+    <SC.Container className="hideOnPrint">
       <SC.Form onSubmit={handleSubmit}>
         <input
           type="text"
           className="date"
-          placeholder="Date of payment"
+          placeholder="Дата"
           value={date}
           onChange={(e) => setDate(e.target.value)}
         />
         <input
           type="text"
           className="money income"
-          placeholder="Income"
+          placeholder="Дохід"
           value={income}
           onChange={(e) => setIncome(e.target.value)}
         />
         <input
           type="text"
           className="money expence"
-          placeholder="Expence"
+          placeholder="Повернення"
           value={expence}
           onChange={(e) => setExpence(e.target.value)}
         />
         <input
           type="text"
           className="comment"
-          placeholder="Add your comment here"
+          placeholder="Коментарій"
           value={comment}
           onChange={(e) => setComment(e.target.value)}
         />
-        <button type="submit">Add Payment</button>
+        <SC.Button type="submit">Додати платіж</SC.Button>
       </SC.Form>
       {error && <div className="error">{error}</div>}
     </SC.Container>

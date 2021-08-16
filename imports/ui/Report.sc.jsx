@@ -39,8 +39,18 @@ export const ClientSelector = styled(LIB.FlexRow)`
 
 export const Label = styled(LIB.FlexColumn)`
   width: 150px;
-  height: 100%;
+  height: 42px;
   color: white;
   font-weight: bold;
   background-color: gray;
+`;
+
+export const Requisits = styled(LIB.FlexColumn)`
+  width: 100%;
+  
+`;
+
+export const Button = styled.button`
+  width: 250px !important;
+  height: 42px !important;
 `;
