@@ -10,7 +10,7 @@ import { Report } from "./Report";
 
 export const App = () => {
   const [client, setClient] = useState("");
-  const users = useTracker(() => UsersCollection.find().fetch());
+  const users = useTracker(() => UsersCollection.find({},{ sort: { createdAt: -1 }}).fetch());
   const undefinedUser = {
     id: undefined,
     login: undefined,

@@ -83,7 +83,7 @@ export const PaymentList = ({ editable, quarter, from, to, payments }) => {
           </SC.monthTaxTotal>
         </SC.TableFooter>);
 
-        return [... list, mothInfo];
+        return [... list.reverse(), mothInfo];
       })}
       <SC.TableFooter>
         <SC.CommentTotal>Разом за {quarter}-й квартал {year}-го:</SC.CommentTotal>
