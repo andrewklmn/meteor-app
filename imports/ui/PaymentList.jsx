@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { PaymentEditForm } from "./PaymentEditForm";
 import { taxPercent } from "../constants/taxes";
 import * as SC from "./PaymentList.sc";
-import { ukrMonths } from '../constants/ukrMonths';
+import { ukrMonths } from "../constants/ukrMonths";
 
 export const PaymentList = ({ editable, quarter, from, to, payments }) => {
   const incomeSum = payments.reduce(
@@ -21,7 +21,7 @@ export const PaymentList = ({ editable, quarter, from, to, payments }) => {
     const months = [];
     for (let i = from; i <= to; i++) {
       if (i < 10) {
-        months.push('0' + i);
+        months.push("0" + i);
       } else {
         months.push(String(i));
       }
@@ -36,61 +36,72 @@ export const PaymentList = ({ editable, quarter, from, to, payments }) => {
       <SC.Title>
         {quarter}-й квартал {year}
       </SC.Title>
-        {editable ? (
-          <SC.TableHeader>
-            <SC.EditorDateHeader>Дата</SC.EditorDateHeader>
-            <SC.EditorMoneyHeader>Дохід</SC.EditorMoneyHeader>
-            <SC.EditorMoneyHeader>Повернення</SC.EditorMoneyHeader>
-            <SC.EditorCommentHeader>Опис</SC.EditorCommentHeader>
-            <SC.EditorSubtotalHeader>На руки</SC.EditorSubtotalHeader>
-            <SC.EditorTaxHeader>Податок</SC.EditorTaxHeader>
-          </SC.TableHeader>
-        ) : (
-          <SC.TableHeader>
-            <SC.DateHeader>Дата</SC.DateHeader>
-            <SC.MoneyHeader>Дохід</SC.MoneyHeader>
-            <SC.MoneyHeader>Повернення</SC.MoneyHeader>
-            <SC.SubtotalHeader>Прибуток</SC.SubtotalHeader>
-            <SC.TaxHeader>Податок, {taxPercent}%</SC.TaxHeader>
-          </SC.TableHeader>
-        )}
+      {editable ? (
+        <SC.TableHeader>
+          <SC.EditorDateHeader>Дата</SC.EditorDateHeader>
+          <SC.EditorMoneyHeader>Дохід</SC.EditorMoneyHeader>
+          <SC.EditorMoneyHeader>Повернення</SC.EditorMoneyHeader>
+          <SC.EditorCommentHeader>Опис</SC.EditorCommentHeader>
+          <SC.EditorSubtotalHeader>На руки</SC.EditorSubtotalHeader>
+          <SC.EditorTaxHeader>Податок</SC.EditorTaxHeader>
+        </SC.TableHeader>
+      ) : (
+        <SC.TableHeader>
+          <SC.DateHeader>Дата</SC.DateHeader>
+          <SC.MoneyHeader>Дохід</SC.MoneyHeader>
+          <SC.MoneyHeader>Повернення</SC.MoneyHeader>
+          <SC.SubtotalHeader>Прибуток</SC.SubtotalHeader>
+          <SC.TaxHeader>Податок, {taxPercent}%</SC.TaxHeader>
+        </SC.TableHeader>
+      )}
       {months.map((month) => {
         let monthIncome = 0;
         let monthExpence = 0;
         const list = payments.map((payment) => {
-          if (payment.createdAt.substr(5,2) !== month) return null;
+          if (payment.createdAt.substr(5, 2) !== month) return null;
 
           monthIncome += Number(payment.income);
           monthExpence += Number(payment.expence);
 
           return (
             <PaymentEditForm
-            key={payment._id}
-            editable={editable}
-            payment={payment}
-          />
+              key={payment._id}
+              editable={editable}
+              payment={payment}
+            />
           );
         });
-        const mothInfo = (<SC.TableFooter key={`${year}-${month}`}>
-          <SC.monthCommentTotal>
-            Всього за {ukrMonths[month]} {from.substr(0, 4)}-го:
-          </SC.monthCommentTotal>
-          <SC.monthSubtotalTotal>
-            {Math.round((monthIncome - monthExpence) * (editable ? 100 - taxPercent : 100)) /100}
-          </SC.monthSubtotalTotal>
-          <SC.monthTaxTotal>
-            {Math.round((monthIncome - monthExpence) * taxPercent) / 100}
-          </SC.monthTaxTotal>
-        </SC.TableFooter>);
+        const mothInfo = (
+          <SC.TableFooter key={`${year}-${month}`}>
+            <SC.monthCommentTotal>
+              Всього за {ukrMonths[month]} {from.substr(0, 4)}-го:
+            </SC.monthCommentTotal>
+            <SC.monthSubtotalTotal>
+              {Math.round(
+                (monthIncome - monthExpence) *
+                  (editable ? 100 - taxPercent : 100)
+              ) / 100}
+            </SC.monthSubtotalTotal>
+            <SC.monthTaxTotal>
+              {Math.round((monthIncome - monthExpence) * taxPercent) / 100}
+            </SC.monthTaxTotal>
+          </SC.TableFooter>
+        );
 
-        return [... list.reverse(), mothInfo];
+        return [...list.reverse(), mothInfo];
       })}
       <SC.TableFooter>
-        <SC.CommentTotal>Разом за {quarter}-й квартал {year}-го:</SC.CommentTotal>
+        <SC.CommentTotal>
+          Разом за {quarter}-й квартал {year}-го:
+        </SC.CommentTotal>
         {editable ? (
-          <SC.SubtotalTotal>{Math.round((incomeSum - expenceSum) * (100 - taxPercent)) / 100}</SC.SubtotalTotal>
+          <SC.SubtotalTotal>
+            {Math.round((incomeSum - expenceSum) * (100 - taxPercent)) / 100}
+          </SC.SubtotalTotal>
         ) : (
-          <SC.SubtotalTotal>{Math.round((incomeSum - expenceSum) * 100) / 100}</SC.SubtotalTotal>
+          <SC.SubtotalTotal>
+            {Math.round((incomeSum - expenceSum) * 100) / 100}
+          </SC.SubtotalTotal>
         )}
         <SC.TaxTotal>
           {Math.round((incomeSum - expenceSum) * taxPercent) / 100}
