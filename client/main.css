@@ -165,7 +165,7 @@ header {
 }
 
 .money {
-  width: 20% !important;
+  width: 20%;
   text-align: right;
 }
 
@@ -178,7 +178,7 @@ header {
 }
 
 .date {
-  max-width: 20% !important;
+  max-width: 20%;
   text-align: center;
   background-color: #FFA;
 }
@@ -193,6 +193,7 @@ header {
   width: 20%;
   background-color: #CCF;
   text-align: right;
+  border-right: none;
 }
 
 .tax {
