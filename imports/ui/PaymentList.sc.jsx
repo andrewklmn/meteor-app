@@ -4,7 +4,6 @@ import * as LIB from './components';
 export const Container = styled.div`
   margin-bottom: 20px;
   width: 100%;
-  overflow-x: hidden;
 `;
 
 export const Title = styled.h3`
@@ -32,7 +31,7 @@ export const DateHeader = styled(LIB.FlexColumn)`
 
 export const MoneyHeader = styled(DateHeader)`
   width: 20%;
-  align-items: flex-end;
+  align-items: center;
 `;
 
 export const CommentHeader = styled(DateHeader)`
@@ -61,7 +60,7 @@ export const EditorDateHeader = styled(LIB.FlexColumn)`
 `;
 
 export const EditorMoneyHeader = styled(EditorDateHeader)`
-  align-items: flex-end;
+  align-items: center;
 `;
 
 export const EditorCommentHeader = styled(EditorDateHeader)`
