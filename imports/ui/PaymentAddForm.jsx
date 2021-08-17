@@ -9,16 +9,27 @@ export const PaymentAddForm = ({ user }) => {
   const [comment, setComment] = useState("");
   const [error, setError] = useState(undefined);
 
+  const handleNumberChange = (e) => {
+    const value = e.target.value.replace(/^[0-9]*$\./g, '');
+    return (Number(value) >= 0) ? value : 0;
+  };
+
   const handleSubmit = (e) => {
     setError('');
     e.preventDefault();
 
-    if (!date ||
-      !(Number(income) >= 0) ||
-      !(Number(expence) >= 0) ||
+
+    if (!date  ||
+      !(Number(income) >= 0 && income !=='') ||
+      !(Number(expence) >= 0 && expence !=='') ||
       !comment) {
-      setError("Please fill in date, income, expence and comment");
+      setError("Заповніть поля дата, дохід, повернення, коментар");
       return;
+    }
+
+    if(Number(income) === 0 && Number(expence) === 0) {
+      setError("Заповніть поля дохід/повернення");
+      return;      
     }
 
     PaymentsCollection.insert({
@@ -50,19 +61,19 @@ export const PaymentAddForm = ({ user }) => {
           className="money income"
           placeholder="Дохід"
           value={income}
-          onChange={(e) => setIncome(e.target.value)}
+          onChange={(e) => setIncome(handleNumberChange(e))}
         />
         <input
           type="text"
           className="money expence"
           placeholder="Повернення"
           value={expence}
-          onChange={(e) => setExpence(e.target.value)}
+          onChange={(e) => setExpence(handleNumberChange(e))}
         />
         <input
           type="text"
           className="comment"
-          placeholder="Коментарій"
+          placeholder="Коментар"
           value={comment}
           onChange={(e) => setComment(e.target.value)}
         />
