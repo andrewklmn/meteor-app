@@ -12,6 +12,11 @@ export const PaymentEditForm = ({ payment, editable }) => {
   const [comment, setComment] = useState(payment.comment);
   const [error, setError] = useState(undefined);
 
+  const handleNumberChange = (e) => {
+    const value = e.target.value.replace(/^[0-9]*$\./g, '');
+    return (!isNaN(Number(value)) && Number(value) >= 0) ? value : 0;
+  };
+
   const isRecordEdited = () => {
     if (
       date === oldValue.createdAt.substr(0, 10) &&
@@ -48,14 +53,17 @@ export const PaymentEditForm = ({ payment, editable }) => {
       return;
     }
 
-    if (
-      !date ||
-      !(Number(income) >= 0) ||
-      !(Number(expence) >= 0) ||
-      !comment
-    ) {
-      setError("Please fill in date, income, expence and comment");
+    if (!date  ||
+      !(Number(income) >= 0 && income !=='') ||
+      !(Number(expence) >= 0 && expence !=='') ||
+      !comment) {
+      setError("Заповніть поля дата, дохід, повернення, коментар");
       return;
+    }
+
+    if(Number(income) === 0 && Number(expence) === 0) {
+      setError("Заповніть поля дохід/повернення");
+      return;      
     }
 
     const newValue = {
@@ -107,7 +115,7 @@ export const PaymentEditForm = ({ payment, editable }) => {
           className="money income disabled"
           placeholder="Add income"
           value={income}
-          onChange={(e) => setIncome(e.target.value)}
+          onChange={(e) => setIncome(handleNumberChange(e))}
           onBlur={handleBlur}
           onFocus={handleFocus}
           onKeyUp={handleKeyUp}
@@ -118,7 +126,7 @@ export const PaymentEditForm = ({ payment, editable }) => {
           className="money expence disabled"
           placeholder="Add expence"
           value={expence}
-          onChange={(e) => setExpence(e.target.value)}
+          onChange={(e) => setExpence(handleNumberChange(e))}
           onBlur={handleBlur}
           onFocus={handleFocus}
           onKeyUp={handleKeyUp}

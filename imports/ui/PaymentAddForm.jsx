@@ -11,7 +11,7 @@ export const PaymentAddForm = ({ user }) => {
 
   const handleNumberChange = (e) => {
     const value = e.target.value.replace(/^[0-9]*$\./g, '');
-    return (Number(value) >= 0) ? value : 0;
+    return (!isNaN(Number(value)) && Number(value) >= 0) ? value : 0;
   };
 
   const handleSubmit = (e) => {
@@ -20,8 +20,8 @@ export const PaymentAddForm = ({ user }) => {
 
 
     if (!date  ||
-      !(Number(income) >= 0 && income !=='') ||
-      !(Number(expence) >= 0 && expence !=='') ||
+      !(!isNaN(Number(income)) && Number(income) >= 0 && income !=='') ||
+      !(!isNaN(Number(expence)) && Number(expence) >= 0 && expence !=='') ||
       !comment) {
       setError("Заповніть поля дата, дохід, повернення, коментар");
       return;
