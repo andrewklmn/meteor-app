@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { PaymentsCollection } from "/imports/api/PaymentsCollection";
 import * as SC from "./PaymentAddForm.sc"; 
 
-export const PaymentAddForm = ({ user, handleClose }) => {
+export const PaymentAddForm = ({ user }) => {
   const [date, setDate] = useState(new Date().toISOString().substr(0, 10));
   const [income, setIncome] = useState(0);
   const [expence, setExpence] = useState(0);
@@ -29,7 +29,10 @@ export const PaymentAddForm = ({ user, handleClose }) => {
       comment,
     });
 
-    handleClose();
+    setDate(new Date().toISOString().substr(0, 10));
+    setIncome(0);
+    setExpence(0);
+    setComment('');
   };
 
   return (
