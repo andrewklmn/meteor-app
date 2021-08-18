@@ -76,7 +76,7 @@ button:focus {
 
 .main {
   display: flex;
-  flex-direction: column;
+  flex-direction: column-reverse;
   background: white;  
 }
 
@@ -234,5 +234,8 @@ header {
   }
   h3 {
     page-break-before : auto;
+  }
+  .main {
+    flex-direction: column;
   }
 }

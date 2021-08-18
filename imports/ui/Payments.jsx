@@ -7,6 +7,7 @@ import { taxPlan } from "../constants/taxes";
 import { Spinner } from "./Spinner";
 
 export const Payments = ({ admin, user }) => {
+  const [ result, setResult ] = useState({ income: 0, expence: 0, tax: 0 });
   const year = new Date().toISOString().substr(0, 4);
   const payments = useTracker(() =>
     PaymentsCollection.find(
@@ -44,12 +45,14 @@ export const Payments = ({ admin, user }) => {
         {payments.length === 0 && <Spinner />}
         {payments.length > 0 &&
           taxPlan.map((period, index) => {
-            if (getQuarter() >= Number(3 - index)) {
+            console.log(getQuarter());
+            if (getQuarter() >= Number(index)) {
+
               return (
                 <PaymentList
                   key={year + JSON.stringify(period)}
                   editable={editable}
-                  quarter={4 - index}
+                  quarter={index + 1}
                   from={`${year}-${period[0]}`}
                   to={`${year}-${period[1]}`}
                   payments={getPaymentsForPeriod({
@@ -57,24 +60,13 @@ export const Payments = ({ admin, user }) => {
                     period,
                     payments,
                   })}
+                  result={result}
+                  setResult={setResult}
                 />
               );
             }
             return null;
           })}
-        {payments.length > 0 && (
-          <PaymentList
-            editable={editable}
-            quarter={4}
-            from={`${year - 1}-${taxPlan[0][0]}`}
-            to={`${year - 1}-${taxPlan[0][1]}`}
-            payments={getPaymentsForPeriod({
-              year: year - 1,
-              period: taxPlan[0],
-              payments,
-            })}
-          />
-        )}
       </div>
     </div>
   );
