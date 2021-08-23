@@ -19,6 +19,9 @@ export const App = () => {
   };
   const [user, setUser] = useState(undefinedUser);
 
+  const year = new Date().toISOString().substr(0, 4);
+  const prevYear = year - 1;
+
   const logout = () => {
     localStorage.removeItem("u");
     setUser({ ...undefinedUser });
@@ -54,7 +57,7 @@ export const App = () => {
         <Switch>
           <Route exact path="/">
             <Navigation user={user} />
-            <Payments user={user} admin={user.id} />
+            <Payments user={user} year={year} admin={user.id} />
           </Route>
           <Route path="/logout">
             <Logout logout={logout} />;
@@ -69,11 +72,15 @@ export const App = () => {
       <Switch>
         <Route exact path="/">
           <Navigation user={user} />
-          <Report user={user} client={client} setClient={setClient} />
+          <Report user={user} client={client} year={year} setClient={setClient} />
+        </Route>
+        <Route exact path="/previous_year">
+          <Navigation user={user} />
+          <Report user={user} client={client} year={prevYear} setClient={setClient} />
         </Route>
         <Route path="/payments">
           <Navigation user={user} />
-          <Payments user={user} admin={user.id} />
+          <Payments user={user} year={year} admin={user.id} />
         </Route>
         <Route path="/logout">
           <Logout logout={logout} />;

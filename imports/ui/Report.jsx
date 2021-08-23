@@ -5,7 +5,7 @@ import * as SC from "./Report.sc";
 import { capitalizeFirstLetter } from "../helpers/capitalizeFirstLetter";
 import { Payments } from "./Payments";
 
-export const Report = ({ user, client, setClient }) => {
+export const Report = ({ user, year, client, setClient }) => {
   const users = useTracker(() =>
     UsersCollection.find(
       { 
@@ -30,7 +30,7 @@ export const Report = ({ user, client, setClient }) => {
       <SC.Requisits className="showOnPrint">
         Шапка отчёта для ФОП в налоговую
       </SC.Requisits>
-      {client && <Payments user={{ id: client }} admin={user}/>}
+      {client && <Payments user={{ id: client }} year={year} admin={user}/>}
     </SC.Container>
   );
 };

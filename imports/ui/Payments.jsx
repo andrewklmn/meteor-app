@@ -3,12 +3,11 @@ import { useTracker } from "meteor/react-meteor-data";
 import { PaymentsCollection } from "/imports/api/PaymentsCollection";
 import { PaymentAddForm } from "./PaymentAddForm";
 import { PaymentList } from "./PaymentList";
-import { taxPlan } from "../constants/taxes";
+import { taxPercent, taxPlan, taxYearPlan } from "../constants/taxes";
 import { Spinner } from "./Spinner";
 
-export const Payments = ({ admin, user }) => {
-  const [ result, setResult ] = useState({ income: 0, expence: 0, tax: 0 });
-  const year = new Date().toISOString().substr(0, 4);
+export const Payments = ({ admin, user, year }) => {
+  const currentYear = new Date().toISOString().substr(0, 4);
   const payments = useTracker(() =>
     PaymentsCollection.find(
       { userId: user.id },
@@ -38,15 +37,44 @@ export const Payments = ({ admin, user }) => {
 
   const editable = admin && (admin === user.id );
 
+  const yearSubTotal = [
+    {
+      income: 0,
+      expence: 0,
+      tax: 0,
+    }
+  ];
+  taxYearPlan.forEach((period) => {
+    const periodPayments = getPaymentsForPeriod({
+      year,
+      period,
+      payments,
+    })
+    const periodSubTotal = {
+      income: periodPayments.reduce((acc, next) =>  acc + Number(next.income) , 0),
+      expence: periodPayments.reduce((acc, next) =>  acc + Number(next.expence) , 0),
+      tax: periodPayments.reduce((acc, next) =>  acc + (next.income - next.expence) * taxPercent / 100 , 0),
+    }
+    yearSubTotal.push(periodSubTotal);
+  });
+
+  console.log(yearSubTotal);
+
   return (
     <div className="app">
+      {editable && <PaymentAddForm user={user} />}
       <div className="main">
-        {editable && <PaymentAddForm user={user} />}
         {payments.length === 0 && <Spinner />}
         {payments.length > 0 &&
           taxPlan.map((period, index) => {
             console.log(getQuarter());
-            if (getQuarter() >= Number(index)) {
+            if (getQuarter() >= Number(index) || currentYear > year) {
+
+              const quarterPayments = getPaymentsForPeriod({
+                year,
+                period,
+                payments,
+              })
 
               return (
                 <PaymentList
@@ -55,13 +83,8 @@ export const Payments = ({ admin, user }) => {
                   quarter={index + 1}
                   from={`${year}-${period[0]}`}
                   to={`${year}-${period[1]}`}
-                  payments={getPaymentsForPeriod({
-                    year,
-                    period,
-                    payments,
-                  })}
-                  result={result}
-                  setResult={setResult}
+                  payments={quarterPayments}
+                  result={yearSubTotal[index]}
                 />
               );
             }

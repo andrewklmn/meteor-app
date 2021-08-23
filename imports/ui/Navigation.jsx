@@ -4,13 +4,22 @@ import { capitalizeFirstLetter } from "../helpers/capitalizeFirstLetter";
 import * as SC from "./Navigation.sc";
 
 export const Navigation = ({ user }) => {
+
+  const year = new Date().toISOString().substr(0, 4);
+  const prevYear = year - 1;
+
   return (
     <SC.Container className="header hideOnPrint">
       <SC.Title>{capitalizeFirstLetter(user.login)}'s workspace</SC.Title>
       <SC.Menu>
         {user.role === "accountant" && (
           <SC.MenuItem>
-            <Link to="/">Звіт</Link>
+            <Link to="/">{year}</Link>
+          </SC.MenuItem>
+        )}
+        {user.role === "accountant" && (
+          <SC.MenuItem>
+            <Link to="/previous_year">{prevYear}</Link>
           </SC.MenuItem>
         )}
         {user.role === "accountant" && (
