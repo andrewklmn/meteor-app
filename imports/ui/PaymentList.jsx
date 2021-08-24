@@ -134,7 +134,7 @@ export const PaymentList = ({
       {quarter === 3 && (
         <SC.TableFooter key={`${year}-${quarter}`}>
           <SC.monthCommentTotal>
-            Результат за 9-ть місяців, грн:
+            Результат за 9 місяців, грн:
           </SC.monthCommentTotal>
           {editable ? (
             <SC.monthSubtotalTotal>
