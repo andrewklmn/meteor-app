@@ -10,7 +10,9 @@ import { Report } from "./Report";
 
 export const App = () => {
   const [client, setClient] = useState("");
-  const users = useTracker(() => UsersCollection.find({},{ sort: { createdAt: -1 }}).fetch());
+  const users = useTracker(() =>
+    UsersCollection.find({}, { sort: { createdAt: -1 } }).fetch()
+  );
   const undefinedUser = {
     id: undefined,
     login: undefined,
@@ -50,7 +52,7 @@ export const App = () => {
       </Router>
     );
   }
-  
+
   if (user && user.role === "user") {
     return (
       <Router>
@@ -58,6 +60,10 @@ export const App = () => {
           <Route exact path="/">
             <Navigation user={user} />
             <Payments user={user} year={year} admin={user.id} />
+          </Route>
+          <Route exact path="/previous_year">
+            <Navigation user={user} />
+            <Payments user={user} year={prevYear} admin={user.id} />
           </Route>
           <Route path="/logout">
             <Logout logout={logout} />;
@@ -72,11 +78,21 @@ export const App = () => {
       <Switch>
         <Route exact path="/">
           <Navigation user={user} />
-          <Report user={user} client={client} year={year} setClient={setClient} />
+          <Report
+            user={user}
+            client={client}
+            year={year}
+            setClient={setClient}
+          />
         </Route>
         <Route exact path="/previous_year">
           <Navigation user={user} />
-          <Report user={user} client={client} year={prevYear} setClient={setClient} />
+          <Report
+            user={user}
+            client={client}
+            year={prevYear}
+            setClient={setClient}
+          />
         </Route>
         <Route path="/payments">
           <Navigation user={user} />
