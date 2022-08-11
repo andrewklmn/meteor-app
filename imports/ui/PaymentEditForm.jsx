@@ -110,7 +110,7 @@ export const PaymentEditForm = ({ payment, editable }) => {
         <input
           type="text"
           className="money income disabled"
-          placeholder="Add income"
+          placeholder="Додай суму"
           value={income}
           onChange={(e) => setIncome(handleNumberChange(e))}
           onBlur={handleBlur}
@@ -121,7 +121,7 @@ export const PaymentEditForm = ({ payment, editable }) => {
         <input
           type="text"
           className="money expence disabled"
-          placeholder="Add expence"
+          placeholder="Додай суму"
           value={expence}
           onChange={(e) => setExpence(handleNumberChange(e))}
           onBlur={handleBlur}
