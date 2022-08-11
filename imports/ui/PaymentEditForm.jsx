@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { PaymentsCollection } from "/imports/api/PaymentsCollection";
-import { taxPercent } from '../constants/taxes';
-import * as SC from "./PaymentEditForm.sc"; 
+import { taxPercent } from "../constants/taxes";
+import { handleNumberChange } from "../helpers/handleNumberChange";
+import * as SC from "./PaymentEditForm.sc";
 
 export const PaymentEditForm = ({ payment, editable }) => {
   const [oldValue, setOldValue] = useState(payment);
@@ -11,11 +12,6 @@ export const PaymentEditForm = ({ payment, editable }) => {
   const [expence, setExpence] = useState(payment.expence);
   const [comment, setComment] = useState(payment.comment);
   const [error, setError] = useState(undefined);
-
-  const handleNumberChange = (e) => {
-    const value = e.target.value.replace(/^[0-9]*$\./g, '');
-    return (!isNaN(Number(value)) && Number(value) >= 0) ? value : 0;
-  };
 
   const isRecordEdited = () => {
     if (
@@ -29,45 +25,46 @@ export const PaymentEditForm = ({ payment, editable }) => {
   };
 
   const cancelEditor = (e) => {
-    if(e.keyCode === 13) {
+    if (e.keyCode === 13) {
       handleSubmit(e);
     }
-    if(e.keyCode === 27) {
+    if (e.keyCode === 27) {
       const { createdAt, income, expence, comment } = oldValue;
       setDate(createdAt);
       setIncome(income);
       setExpence(expence);
       setComment(comment);
-      setError('');
+      setError("");
       setIsEditor(false);
     }
-  }
+  };
 
   const handleSubmit = (e) => {
     setError("");
     e.preventDefault();
-    
 
-    if(!isRecordEdited()) {
+    if (!isRecordEdited()) {
       setIsEditor(false);
       return;
     }
 
-    if (!date  ||
-      !(Number(income) >= 0 && income !=='') ||
-      !(Number(expence) >= 0 && expence !=='') ||
-      !comment) {
+    if (
+      !date ||
+      !(Number(income) >= 0 && income !== "") ||
+      !(Number(expence) >= 0 && expence !== "") ||
+      !comment
+    ) {
       setError("Заповніть поля дата, дохід, повернення, коментар");
       return;
     }
 
-    if(Number(income) === 0 && Number(expence) === 0) {
+    if (Number(income) === 0 && Number(expence) === 0) {
       setError("Заповніть поля дохід/повернення");
-      return;      
+      return;
     }
 
     const newValue = {
-      _id: payment._id,      
+      _id: payment._id,
       createdAt: date,
       userId: payment.userId,
       income,
@@ -81,20 +78,20 @@ export const PaymentEditForm = ({ payment, editable }) => {
   };
 
   const handleFocus = (e) => {
-    e.target.classList.remove('disabled')
+    e.target.classList.remove("disabled");
     e.target.select();
   };
 
   const handleBlur = (e) => {
-    e.target.classList.add('disabled')
+    e.target.classList.add("disabled");
     handleSubmit(e);
   };
 
   const handleKeyUp = (e) => {
-    if(e.keyCode === 13) {
+    if (e.keyCode === 13) {
       e.target.blur();
     }
-  }
+  };
 
   return (
     <>
@@ -149,13 +146,17 @@ export const PaymentEditForm = ({ payment, editable }) => {
           type="text"
           className="moneySubtotal disabled"
           readOnly
-          value={Math.round((income - expence) * (editable ? 100 - taxPercent : 100)) /100}          
+          value={
+            Math.round(
+              (income - expence) * (editable ? 100 - taxPercent : 100)
+            ) / 100
+          }
         />
         <input
           type="text"
           className="tax disabled"
           readOnly
-          value={Math.round((income - expence) * taxPercent)/100}          
+          value={Math.round((income - expence) * taxPercent) / 100}
         />
       </SC.Form>
       {error && <div className="error">{error}</div>}

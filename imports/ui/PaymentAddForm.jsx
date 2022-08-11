@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { PaymentsCollection } from "/imports/api/PaymentsCollection";
-import * as SC from "./PaymentAddForm.sc"; 
+import { handleNumberChange } from "../helpers/handleNumberChange";
+import * as SC from "./PaymentAddForm.sc";
 
 export const PaymentAddForm = ({ user }) => {
   const [date, setDate] = useState(new Date().toISOString().substr(0, 10));
@@ -9,27 +10,23 @@ export const PaymentAddForm = ({ user }) => {
   const [comment, setComment] = useState("");
   const [error, setError] = useState(undefined);
 
-  const handleNumberChange = (e) => {
-    const value = e.target.value.replace(/^[0-9]*$\./g, '');
-    return (!isNaN(Number(value)) && Number(value) >= 0) ? value : 0;
-  };
-
   const handleSubmit = (e) => {
-    setError('');
+    setError("");
     e.preventDefault();
 
-
-    if (!date  ||
-      !(!isNaN(Number(income)) && Number(income) >= 0 && income !=='') ||
-      !(!isNaN(Number(expence)) && Number(expence) >= 0 && expence !=='') ||
-      !comment) {
+    if (
+      !date ||
+      !(!isNaN(Number(income)) && Number(income) >= 0 && income !== "") ||
+      !(!isNaN(Number(expence)) && Number(expence) >= 0 && expence !== "") ||
+      !comment
+    ) {
       setError("Заповніть поля дата, дохід, повернення, коментар");
       return;
     }
 
-    if(Number(income) === 0 && Number(expence) === 0) {
+    if (Number(income) === 0 && Number(expence) === 0) {
       setError("Заповніть поля дохід/повернення");
-      return;      
+      return;
     }
 
     PaymentsCollection.insert({
@@ -43,7 +40,7 @@ export const PaymentAddForm = ({ user }) => {
     setDate(new Date().toISOString().substr(0, 10));
     setIncome(0);
     setExpence(0);
-    setComment('');
+    setComment("");
   };
 
   return (
