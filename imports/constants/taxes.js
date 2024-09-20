@@ -12,3 +12,11 @@ export const taxYearPlan = [
 ];
 
 export const taxPercent = 5;
+export const warTaxPercent = 1;
+
+export const getWarTaxPercent = (date) => {
+  if (date >= '2024-10-01') {
+    return warTaxPercent;
+  }
+  return 0;
+}

@@ -35,22 +35,22 @@ export const MoneyHeader = styled(DateHeader)`
 `;
 
 export const CommentHeader = styled(DateHeader)`
-  width: 20%;
+  width: 15%;
   align-items: center;
 `;
 
 export const SubtotalHeader = styled(DateHeader)`
-  width: 20%;
+  width: 15%;
   align-items: flex-end;
 `;
 
 export const TaxHeader = styled(DateHeader)`
-  width: 20%;
+  width: 12.5%;
   align-items: center;
 `;
 
 export const EditorDateHeader = styled(LIB.FlexColumn)`
-  width: 16.666%;
+  width: 20%;
   height: 100%;
 
   font-weight: 700;
@@ -60,18 +60,22 @@ export const EditorDateHeader = styled(LIB.FlexColumn)`
 `;
 
 export const EditorMoneyHeader = styled(EditorDateHeader)`
+  width: 15%;
   align-items: center;
 `;
 
 export const EditorCommentHeader = styled(EditorDateHeader)`
+  width: 12.5%;
   align-items: center;
 `;
 
 export const EditorSubtotalHeader = styled(EditorDateHeader)`
+  width: 12.5%;
   align-items: center;
 `;
 
 export const EditorTaxHeader = styled(EditorDateHeader)`
+  max-width: 12.5%;
   align-items: center;
 `;
 
@@ -100,12 +104,12 @@ export const CommentTotal = styled(DateTotal)`
 `;
 
 export const SubtotalTotal = styled(DateTotal)`
-  width: 20%;
+  width: 15%;
   align-items: flex-end;
 `;
 
 export const TaxTotal = styled(DateTotal)`
-  width: 20%;
+  width: 12.5%;
   align-items: center;
 `;
 
@@ -117,13 +121,13 @@ export const monthCommentTotal = styled(DateTotal)`
 `;
 
 export const monthSubtotalTotal = styled(DateTotal)`
-  width: 20%;
+  width: 15%;
   align-items: flex-end;
   font-weight: normal;
 `;
 
 export const monthTaxTotal = styled(DateTotal)`
-  width: 20%;
+  width: 12.5%;
   align-items: center;
   font-weight: normal;
 `;

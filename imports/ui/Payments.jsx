@@ -3,7 +3,7 @@ import { useTracker } from "meteor/react-meteor-data";
 import { PaymentsCollection } from "/imports/api/PaymentsCollection";
 import { PaymentAddForm } from "./PaymentAddForm";
 import { PaymentList } from "./PaymentList";
-import { taxPercent, taxPlan, taxYearPlan } from "../constants/taxes";
+import { getWarTaxPercent, taxPercent, taxPlan, taxYearPlan } from "../constants/taxes";
 import { Spinner } from "./Spinner";
 
 export const Payments = ({ admin, user, year }) => {
@@ -35,30 +35,48 @@ export const Payments = ({ admin, user, year }) => {
     });
   };
 
-  const editable = admin && (admin === user.id );
+  const editable = admin && admin === user.id;
 
   const yearSubTotal = [
     {
       income: 0,
       expence: 0,
       tax: 0,
-    }
+      warTax: 0,
+    },
   ];
   taxYearPlan.forEach((period) => {
     const periodPayments = getPaymentsForPeriod({
       year,
       period,
       payments,
-    })
+    });
     const periodSubTotal = {
-      income: periodPayments.reduce((acc, next) =>  acc + Number(next.income) , 0),
-      expence: periodPayments.reduce((acc, next) =>  acc + Number(next.expence) , 0),
-      tax: periodPayments.reduce((acc, next) =>  acc + (next.income - next.expence) * taxPercent / 100 , 0),
-    }
+      income: periodPayments.reduce(
+        (acc, next) => acc + Number(next.income),
+        0
+      ),
+      expence: periodPayments.reduce(
+        (acc, next) => acc + Number(next.expence),
+        0
+      ),
+      tax: periodPayments.reduce(
+        (acc, next) =>
+          acc +
+          ((Number(next.income) - Number(next.expence)) * taxPercent) / 100,
+        0
+      ),
+      warTax: periodPayments.reduce(
+        (acc, next) =>
+          acc +
+          ((Number(next.income) - Number(next.expence)) *
+            getWarTaxPercent(`${year}-${period[0]}`)) /
+            100,
+        0
+      ),
+    };
     yearSubTotal.push(periodSubTotal);
   });
-
-  console.log(yearSubTotal);
 
   return (
     <div className="app">
@@ -67,14 +85,12 @@ export const Payments = ({ admin, user, year }) => {
         {payments.length === 0 && <Spinner />}
         {payments.length > 0 &&
           taxPlan.map((period, index) => {
-            console.log(getQuarter());
             if (getQuarter() >= Number(index) || currentYear > year) {
-
               const quarterPayments = getPaymentsForPeriod({
                 year,
                 period,
                 payments,
-              })
+              });
 
               return (
                 <PaymentList

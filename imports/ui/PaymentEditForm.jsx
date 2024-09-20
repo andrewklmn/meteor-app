@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { PaymentsCollection } from "/imports/api/PaymentsCollection";
-import { taxPercent } from "../constants/taxes";
+import { getWarTaxPercent, taxPercent } from "../constants/taxes";
 import { handleNumberChange } from "../helpers/handleNumberChange";
 import * as SC from "./PaymentEditForm.sc";
 
@@ -148,7 +148,7 @@ export const PaymentEditForm = ({ payment, editable }) => {
           readOnly
           value={
             Math.round(
-              (income - expence) * (editable ? 100 - taxPercent : 100)
+              (income - expence) * (editable ? 100 - taxPercent - getWarTaxPercent(date) : 100)
             ) / 100
           }
         />
@@ -157,6 +157,12 @@ export const PaymentEditForm = ({ payment, editable }) => {
           className="tax disabled"
           readOnly
           value={Math.round((income - expence) * taxPercent) / 100}
+        />
+        <input
+          type="text"
+          className="tax disabled"
+          readOnly
+          value={Math.round((income - expence) * getWarTaxPercent(date)) / 100}
         />
       </SC.Form>
       {error && <div className="error">{error}</div>}

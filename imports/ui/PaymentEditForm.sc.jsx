@@ -19,7 +19,7 @@ export const Form = styled.form`
   }
 
   & > input.tax {
-    border-right: none;
+    
   }
 
   & > button {
