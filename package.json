@@ -8,7 +8,8 @@
     "visualize": "meteor --production --extra-packages bundle-visualizer",
     "build": "meteor build ./build --architecture os.linux.x86_64",
     "start:built": "sudo MONGO_URL=mongodb://localhost:27017/fop ROOT_URL=http://localhost:80 PORT=80 node main.js",
-    "deploy": "scp build/meteor-app.tar.gz opc@152.70.155.113:/home/opc/meteor-app.tar.gz"
+    "deploy": "scp build/meteor-app.tar.gz opc@152.70.155.113:/home/opc/meteor-app.tar.gz",
+    "restart:remote": "ssh opc@152.70.155.113 './deploy-meteor.sh && exit'"
   },
   "dependencies": {
     "@babel/runtime": "^7.11.2",
