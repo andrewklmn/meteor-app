@@ -51,6 +51,14 @@ export const Payments = ({ admin, user, year }) => {
       period,
       payments,
     });
+
+    const warTax = getWarTaxPercent(`${year}-${period[0]}`);
+    console.log("============ year", year);
+    console.log("==== period", period);
+    console.log("==== warTax", warTax);
+    console.log("==== periodPayments", periodPayments);
+
+
     const periodSubTotal = {
       income: periodPayments.reduce(
         (acc, next) => acc + Number(next.income),
@@ -70,7 +78,7 @@ export const Payments = ({ admin, user, year }) => {
         (acc, next) =>
           acc +
           ((Number(next.income) - Number(next.expence)) *
-            getWarTaxPercent(`${year}-${period[0]}`)) /
+            getWarTaxPercent(`${year}-${period[1]}`)) /
             100,
         0
       ),
