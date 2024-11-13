@@ -78,6 +78,8 @@ export const Payments = ({ admin, user, year }) => {
     yearSubTotal.push(periodSubTotal);
   });
 
+  console.log("==== yearSubTotal", yearSubTotal);
+
   return (
     <div className="app">
       {editable && <PaymentAddForm user={user} />}
