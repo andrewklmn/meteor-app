@@ -151,6 +151,16 @@ export const PaymentList = ({
         <SC.TaxTotal>{Math.round(taxSum * 100) / 100}</SC.TaxTotal>
         <SC.TaxTotal>{Math.round(warTaxSum * 100) / 100}</SC.TaxTotal>
       </SC.TableFooter>
+      <SC.TableFooter>
+        <SC.monthCommentTotal>
+          Податків за {quarter}-й квартал:
+        </SC.monthCommentTotal>
+        <SC.monthSubtotalTotal></SC.monthSubtotalTotal>
+        <SC.monthSubtotalTotal></SC.monthSubtotalTotal>
+        <SC.monthTaxTotal>
+          {Math.round(taxSum * 100) / 100 + Math.round(warTaxSum * 100) / 100}
+        </SC.monthTaxTotal>
+      </SC.TableFooter>
       {quarter === 2 && (
         <SC.TableFooter key={`${year}-${quarter}`}>
           <SC.monthCommentTotal>
@@ -159,7 +169,8 @@ export const PaymentList = ({
           {editable ? (
             <SC.monthSubtotalTotal>
               {Math.round(
-                (result.income - result.expence - result.tax - result.warTax) * 100
+                (result.income - result.expence - result.tax - result.warTax) *
+                  100
               ) / 100}
             </SC.monthSubtotalTotal>
           ) : (
@@ -183,7 +194,8 @@ export const PaymentList = ({
           {editable ? (
             <SC.monthSubtotalTotal>
               {Math.round(
-                (result.income - result.expence - result.tax - result.warTax) * 100
+                (result.income - result.expence - result.tax - result.warTax) *
+                  100
               ) / 100}
             </SC.monthSubtotalTotal>
           ) : (
@@ -205,7 +217,8 @@ export const PaymentList = ({
           {editable ? (
             <SC.monthSubtotalTotal>
               {Math.round(
-                (result.income - result.expence - result.tax - result.warTax) * 100
+                (result.income - result.expence - result.tax - result.warTax) *
+                  100
               ) / 100}
             </SC.monthSubtotalTotal>
           ) : (
