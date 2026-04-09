@@ -18,17 +18,17 @@ export const PaymentList = ({
 }) => {
   const incomeSum = payments.reduce(
     (prev, next) => prev + Number(next.income),
-    0
+    0,
   );
   const expenceSum = payments.reduce(
     (prev, next) => prev + Number(next.expence),
-    0
+    0,
   );
 
   const taxSum = payments.reduce(
     (prev, next) =>
       prev + ((Number(next.income) - Number(next.expence)) * taxPercent) / 100,
-    0
+    0,
   );
 
   const warTaxSum = payments.reduce(
@@ -37,7 +37,7 @@ export const PaymentList = ({
       ((Number(next.income) - Number(next.expence)) *
         getWarTaxPercent(next.createdAt.substr(0, 10))) /
         100,
-    0
+    0,
   );
 
   const year = from.substr(0, 4);
@@ -100,7 +100,7 @@ export const PaymentList = ({
           monthWarTax +=
             Math.round(
               (income - expence) *
-                getWarTaxPercent(payment.createdAt.substr(0, 10))
+                getWarTaxPercent(payment.createdAt.substr(0, 10)),
             ) / 100;
 
           return (
@@ -120,7 +120,7 @@ export const PaymentList = ({
               {Math.round(
                 (editable
                   ? monthIncome - monthExpence - monthTax - monthWarTax
-                  : monthIncome - monthExpence) * 100
+                  : monthIncome - monthExpence) * 100,
               ) / 100}
             </SC.monthSubtotalTotal>
             <SC.monthTaxTotal>
@@ -158,7 +158,10 @@ export const PaymentList = ({
         <SC.monthSubtotalTotal></SC.monthSubtotalTotal>
         <SC.monthSubtotalTotal></SC.monthSubtotalTotal>
         <SC.monthTaxTotal>
-          {Math.round(taxSum * 100) / 100 + Math.round(warTaxSum * 100) / 100}
+          {(
+            Math.round(taxSum * 100) / 100 +
+            Math.round(warTaxSum * 100) / 100
+          ).toFixed(2)}
         </SC.monthTaxTotal>
       </SC.TableFooter>
       {quarter === 2 && (
@@ -170,7 +173,7 @@ export const PaymentList = ({
             <SC.monthSubtotalTotal>
               {Math.round(
                 (result.income - result.expence - result.tax - result.warTax) *
-                  100
+                  100,
               ) / 100}
             </SC.monthSubtotalTotal>
           ) : (
@@ -195,7 +198,7 @@ export const PaymentList = ({
             <SC.monthSubtotalTotal>
               {Math.round(
                 (result.income - result.expence - result.tax - result.warTax) *
-                  100
+                  100,
               ) / 100}
             </SC.monthSubtotalTotal>
           ) : (
@@ -218,7 +221,7 @@ export const PaymentList = ({
             <SC.monthSubtotalTotal>
               {Math.round(
                 (result.income - result.expence - result.tax - result.warTax) *
-                  100
+                  100,
               ) / 100}
             </SC.monthSubtotalTotal>
           ) : (
