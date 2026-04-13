@@ -54,11 +54,11 @@ export const HeaderCell = styled.div`
 
   ${(props) => {
     if (props.date) return `width: 16%; justify-content: center;`;
-    if (props.money && props.income) return `width: 14%;`;
-    if (props.money && props.expence) return `width: 14%;`;
-    if (props.money) return `width: 20%;`;
-    if (props.comment) return `width: 20%; justify-content: center;`;
-    if (props.tax) return `width: 11%;`;
+    if (props.money && props.income) return `width: 14%; justify-content: flex-end;`;
+    if (props.money && props.expence) return `width: 14%; justify-content: flex-end;`;
+    if (props.money) return `width: 20%; justify-content: flex-end;`;
+    if (props.comment) return `width: 20%; justify-content: flex-end;`;
+    if (props.tax) return `width: 11%; justify-content: flex-end;`;
     return `flex: 1;`;
   }}
 `;

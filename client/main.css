@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
 
 /* ===== Reset & Base ===== */
 *,
@@ -13,7 +13,13 @@ body {
   justify-content: flex-start;
   align-items: center;
 
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family:
+    "Inter",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    sans-serif;
   background-color: #315481;
   background-image: linear-gradient(to bottom, #315481, #918e82 100%);
   background-attachment: fixed;
@@ -32,7 +38,12 @@ body {
 }
 
 /* ===== Typography ===== */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   margin-top: 0;
   margin-bottom: 0.5rem;
   font-weight: 600;
@@ -40,9 +51,15 @@ h1, h2, h3, h4, h5, h6 {
   color: #1a1a2e;
 }
 
-h1 { font-size: 1.75rem; }
-h2 { font-size: 1.5rem; }
-h3 { font-size: 1.25rem; }
+h1 {
+  font-size: 1.75rem;
+}
+h2 {
+  font-size: 1.5rem;
+}
+h3 {
+  font-size: 1.25rem;
+}
 
 p {
   margin-top: 0;
@@ -76,7 +93,10 @@ button {
   box-shadow: 0 2px 4px rgba(34, 25, 25, 0.2);
   padding: 8px 16px;
   cursor: pointer;
-  transition: background-color 200ms ease, box-shadow 200ms ease, transform 150ms ease;
+  transition:
+    background-color 200ms ease,
+    box-shadow 200ms ease,
+    transform 150ms ease;
 }
 
 button:hover {
@@ -112,7 +132,10 @@ textarea {
   border-radius: 6px;
   background-color: #f8f9fa;
   color: #1a1a2e;
-  transition: border-color 200ms ease, box-shadow 200ms ease, background-color 200ms ease;
+  transition:
+    border-color 200ms ease,
+    box-shadow 200ms ease,
+    background-color 200ms ease;
 }
 
 input:focus,
@@ -150,7 +173,7 @@ input::placeholder {
   align-items: center;
   width: 100%;
   max-width: 800px;
-  padding: 16px;
+  padding: 0 16px 16px 16px;
 }
 
 /* ===== App Container ===== */
@@ -313,13 +336,22 @@ header {
 
 /* ===== Spinner Animation ===== */
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 @keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
 }
 
 /* ===== Scrollbar Styling ===== */
@@ -375,9 +407,15 @@ header {
     font-size: 0.85rem;
   }
 
-  h1 { font-size: 1.5rem; }
-  h2 { font-size: 1.3rem; }
-  h3 { font-size: 1.1rem; }
+  h1 {
+    font-size: 1.5rem;
+  }
+  h2 {
+    font-size: 1.3rem;
+  }
+  h3 {
+    font-size: 1.1rem;
+  }
 
   #react-target {
     padding: 8px;
