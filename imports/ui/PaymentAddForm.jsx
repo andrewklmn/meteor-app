@@ -62,7 +62,7 @@ export const PaymentAddForm = ({ user }) => {
 
             <SC.Field>
               <SC.Label htmlFor="payment-income">Дохід</SC.Label>
-              <SC.Input
+              <SC.MoneyInput
                 id="payment-income"
                 type="text"
                 inputMode="decimal"
@@ -75,7 +75,7 @@ export const PaymentAddForm = ({ user }) => {
 
             <SC.Field>
               <SC.Label htmlFor="payment-expence">Повернення</SC.Label>
-              <SC.Input
+              <SC.MoneyInput
                 id="payment-expence"
                 type="text"
                 inputMode="decimal"

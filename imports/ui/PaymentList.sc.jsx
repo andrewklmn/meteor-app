@@ -1,11 +1,17 @@
-import styled from '@emotion/styled';
-import * as LIB from './components';
-import { colors, shadows, borderRadius, transitions, typography } from '../constants/theme';
+import styled from "@emotion/styled";
+import * as LIB from "./components";
+import {
+  colors,
+  shadows,
+  borderRadius,
+  transitions,
+  typography,
+} from "../constants/theme";
 
 // Grid template for editable mode: date(16%) income(14%) expence(14%) comment(20%) subtotal(14%) tax(11%) tax(11%)
-const editableGrid = '16% 14% 14% 20% 14% 11% 11%';
+const editableGrid = "16% 14% 14% 20% 14% 11% 11%";
 // Grid template for read-only mode: date(20%) income(20%) expence(20%) comment(15%) tax(12.5%) tax(12.5%)
-const readOnlyGrid = '20% 20% 20% 15% 12.5% 12.5%';
+const readOnlyGrid = "20% 20% 20% 15% 12.5% 12.5%";
 
 export const Container = styled.div`
   margin-bottom: 20px;
@@ -54,10 +60,12 @@ export const HeaderCell = styled.div`
 
   ${(props) => {
     if (props.date) return `width: 16%; justify-content: center;`;
-    if (props.money && props.income) return `width: 14%; justify-content: flex-end;`;
-    if (props.money && props.expence) return `width: 14%; justify-content: flex-end;`;
-    if (props.money) return `width: 20%; justify-content: flex-end;`;
-    if (props.comment) return `width: 20%; justify-content: flex-end;`;
+    if (props.money && props.income)
+      return `width: 14%; justify-content: flex-end;`;
+    if (props.money && props.expence)
+      return `width: 14%; justify-content: flex-end;`;
+    if (props.money) return `width: 14%; justify-content: flex-end;`;
+    if (props.comment) return `width: 20%; justify-content: center;`;
     if (props.tax) return `width: 11%; justify-content: flex-end;`;
     return `flex: 1;`;
   }}
@@ -121,7 +129,7 @@ export const TableFooter = styled(LIB.FlexRow)`
 const baseFooterCell = `
   display: flex;
   align-items: center;
-  padding: 8px 8px;
+  padding: 8px 4px;
   font-size: ${typography.small};
   color: ${colors.textPrimary};
   background-color: transparent;
@@ -132,10 +140,13 @@ export const FooterCell = styled.div`
   ${baseFooterCell}
 
   ${(props) => {
-    if (props.comment) return `width: 64%; padding-left: 16px; font-weight: 500; justify-content: flex-start;`;
-    if (props.money && props.subtotal) return `width: 14%; justify-content: flex-end; font-weight: 700;`;
-    if (props.money) return `width: 20%; justify-content: flex-end;`;
-    if (props.tax) return `width: 11%; justify-content: center; font-weight: 600;`;
+    if (props.comment)
+      return `width: 64%; padding-left: 8px; font-weight: 500; justify-content: flex-start;`;
+    if (props.money && props.subtotal)
+      return `width: 14%; justify-content: flex-end; font-weight: 700;`;
+    if (props.money) return `width: 14%; justify-content: flex-end;`;
+    if (props.tax)
+      return `width: 11%; justify-content: flex-end; font-weight: 600;`;
     return `flex: 1;`;
   }}
 `;

@@ -1,6 +1,12 @@
-import styled from '@emotion/styled';
-import * as LIB from './components';
-import { colors, shadows, borderRadius, transitions, typography } from '../constants/theme';
+import styled from "@emotion/styled";
+import * as LIB from "./components";
+import {
+  colors,
+  shadows,
+  borderRadius,
+  transitions,
+  typography,
+} from "../constants/theme";
 
 export const Container = styled.div`
   margin-bottom: 16px;
@@ -20,7 +26,11 @@ export const CardTitle = styled.h3`
   font-size: ${typography.h3};
   font-weight: 700;
   color: ${colors.textPrimary};
-  background: linear-gradient(135deg, ${colors.primaryGradientStart}, ${colors.primaryGradientEnd});
+  background: linear-gradient(
+    135deg,
+    ${colors.primaryGradientStart},
+    ${colors.primaryGradientEnd}
+  );
   border-bottom: 1px solid ${colors.borderLight};
 `;
 
@@ -85,6 +95,10 @@ export const Input = styled.input`
   &::placeholder {
     color: ${colors.textMuted};
   }
+`;
+
+export const MoneyInput = styled(Input)`
+  text-align: right;
 `;
 
 export const Button = styled.button`

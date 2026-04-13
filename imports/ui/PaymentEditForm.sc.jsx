@@ -23,6 +23,7 @@ export const Form = styled.form`
 export const InputCell = styled.div`
   display: flex;
   align-items: stretch;
+  box-sizing: border-box;
 
   ${(props) => {
     if (props.date) return 'width: 16%;';
@@ -38,7 +39,7 @@ export const InputCell = styled.div`
   & > input {
     box-sizing: border-box;
     width: 100%;
-    padding: 6px 8px;
+    padding: 6px 4px;
     border: none;
     border-right: 1px solid ${colors.borderLight};
     font-size: ${typography.small};
