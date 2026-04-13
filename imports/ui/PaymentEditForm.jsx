@@ -158,7 +158,7 @@ export const PaymentEditForm = ({ payment, editable }) => {
             aria-label="Повернення"
           />
         </SC.InputCell>
-        {editable && (
+        {editable ? (
           <SC.InputCell comment>
             <input
               type="text"
@@ -170,6 +170,16 @@ export const PaymentEditForm = ({ payment, editable }) => {
               onFocus={handleFocus}
               onKeyUp={handleKeyUp}
               readOnly={!editable}
+              aria-label="Коментар"
+            />
+          </SC.InputCell>
+        ) : (
+          <SC.InputCell comment readonly>
+            <input
+              type="text"
+              className="comment disabled"
+              readOnly
+              value={comment}
               aria-label="Коментар"
             />
           </SC.InputCell>

@@ -53,6 +53,7 @@ const baseHeaderCell = `
   text-transform: uppercase;
   letter-spacing: 0.3px;
   min-height: 40px;
+  overflow: hidden;
 `;
 
 export const HeaderCell = styled.div`
@@ -64,9 +65,9 @@ export const HeaderCell = styled.div`
       return `width: 14%; justify-content: flex-end;`;
     if (props.money && props.expence)
       return `width: 14%; justify-content: flex-end;`;
-    if (props.money) return `width: 14%; justify-content: flex-end;`;
-    if (props.comment) return `width: 20%; justify-content: center;`;
-    if (props.tax) return `width: 11%; justify-content: flex-end;`;
+    if (props.money) return `width: 12%; justify-content: flex-end;`;
+    if (props.comment) return `width: 18%; justify-content: center;`;
+    if (props.tax) return `width: 13%; justify-content: flex-end;`;
     return `flex: 1;`;
   }}
 `;
@@ -134,6 +135,7 @@ const baseFooterCell = `
   color: ${colors.textPrimary};
   background-color: transparent;
   min-height: 36px;
+  overflow: hidden;
 `;
 
 export const FooterCell = styled.div`
@@ -141,12 +143,12 @@ export const FooterCell = styled.div`
 
   ${(props) => {
     if (props.comment)
-      return `width: 64%; padding-left: 8px; font-weight: 500; justify-content: flex-start;`;
+      return `width: 68%; padding-left: 8px; font-weight: 500; justify-content: flex-start;`;
     if (props.money && props.subtotal)
-      return `width: 14%; justify-content: flex-end; font-weight: 700;`;
-    if (props.money) return `width: 14%; justify-content: flex-end;`;
+      return `width: 12%; justify-content: flex-end; font-weight: 700;`;
+    if (props.money) return `width: 12%; justify-content: flex-end;`;
     if (props.tax)
-      return `width: 11%; justify-content: flex-end; font-weight: 600;`;
+      return `width: 13%; justify-content: flex-end; font-weight: 600;`;
     return `flex: 1;`;
   }}
 `;

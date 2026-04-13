@@ -318,8 +318,9 @@ header {
 }
 
 .tax {
-  max-width: 12.5% !important;
-  text-align: center;
+  max-width: 100%;
+  text-overflow: ellipsis;
+  text-align: right !important;
 }
 
 .error {

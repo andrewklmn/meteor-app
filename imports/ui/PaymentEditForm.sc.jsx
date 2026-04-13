@@ -1,6 +1,6 @@
-import styled from '@emotion/styled';
-import * as LIB from './components';
-import { colors, transitions, typography } from '../constants/theme';
+import styled from "@emotion/styled";
+import * as LIB from "./components";
+import { colors, transitions, typography } from "../constants/theme";
 
 export const Form = styled.form`
   display: flex;
@@ -24,16 +24,16 @@ export const InputCell = styled.div`
   display: flex;
   align-items: stretch;
   box-sizing: border-box;
+  overflow: hidden;
 
   ${(props) => {
-    if (props.date) return 'width: 16%;';
-    if (props.money && props.income) return 'width: 14%;';
-    if (props.money && props.expence) return 'width: 14%;';
-    if (props.money) return 'width: 14%;';
-    if (props.comment) return 'width: 20%;';
-    if (props.tax) return 'width: 11%;';
-    if (props.readonly) return 'flex: 1;';
-    return 'flex: 1;';
+    if (props.date) return "width: 16%;";
+    if (props.money && props.income) return "width: 14%;";
+    if (props.money && props.expence) return "width: 14%;";
+    if (props.money) return "width: 12%;";
+    if (props.comment) return "width: 18%;";
+    if (props.tax) return "width: 13%;";
+    return "flex: 1;";
   }}
 
   & > input {
@@ -43,9 +43,11 @@ export const InputCell = styled.div`
     border: none;
     border-right: 1px solid ${colors.borderLight};
     font-size: ${typography.small};
-    text-align: ${(props) => (props.money ? 'right' : 'center')};
+    text-align: ${(props) => (props.money ? "right" : "center")};
     background-color: transparent;
     transition: background-color ${transitions.fast};
+    overflow: hidden;
+    text-overflow: ellipsis;
 
     &:focus {
       background-color: ${colors.inputFocused};
