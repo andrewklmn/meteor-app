@@ -9,7 +9,10 @@ export const Navigation = ({ user }) => {
   const location = useLocation();
 
   const isActive = (path) => {
-    if (path === "/" && (location.pathname === "/" || location.pathname === "")) {
+    if (
+      path === "/" &&
+      (location.pathname === "/" || location.pathname === "")
+    ) {
       return true;
     }
     if (path === "/previous_year" && location.pathname === "/previous_year") {
@@ -40,7 +43,9 @@ export const Navigation = ({ user }) => {
           </SC.MenuItem>
         )}
         <SC.MenuItem>
-          <Link to="/logout" className="logout-link">🚪 Вийти</Link>
+          <Link to="/logout" className="logout-link">
+            Вийти
+          </Link>
         </SC.MenuItem>
       </SC.Menu>
     </SC.Container>

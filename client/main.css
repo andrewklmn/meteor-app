@@ -377,6 +377,7 @@ header {
 
 /* ===== Utility Classes ===== */
 .showOnPrint {
+  display: none;
   visibility: hidden;
 }
 
@@ -447,6 +448,7 @@ header {
 /* ===== Print Styles ===== */
 @media print {
   .showOnPrint {
+    display: block;
     visibility: visible;
   }
   .hideOnPrint {
