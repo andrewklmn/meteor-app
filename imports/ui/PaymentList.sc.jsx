@@ -56,9 +56,11 @@ const baseHeaderCell = `
   overflow: hidden;
 `;
 
-export const HeaderCell = styled.div`
+export const BaseHeaderCell = styled.div`
   ${baseHeaderCell}
+`;
 
+export const HeaderCell = styled(BaseHeaderCell)`
   ${(props) => {
     if (props.date) return `width: 16%; justify-content: center;`;
     if (props.money && props.income)
@@ -72,29 +74,27 @@ export const HeaderCell = styled.div`
   }}
 `;
 
-export const DateHeader = styled(HeaderCell)`
-  width: 20%;
+export const DateHeader = styled(BaseHeaderCell)`
+  width: 15%;
   justify-content: center;
 `;
 
-export const MoneyHeader = styled(DateHeader)`
+export const MoneyHeader = styled(BaseHeaderCell)`
   width: 20%;
+  justify-content: flex-end;
 `;
 
-export const CommentHeader = styled(DateHeader)`
-  width: 15%;
-`;
-
-export const SubtotalHeader = styled(DateHeader)`
+export const SubtotalHeader = styled(BaseHeaderCell)`
   width: 15%;
   justify-content: flex-end;
 `;
 
-export const TaxHeader = styled(DateHeader)`
-  width: 12.5%;
+export const TaxHeader = styled(BaseHeaderCell)`
+  width: 15%;
+  justify-content: flex-end;
 `;
 
-export const EditorDateHeader = styled(HeaderCell)`
+export const EditorDateHeader = styled(BaseHeaderCell)`
   width: 20%;
   justify-content: center;
 `;
@@ -142,8 +142,18 @@ export const FooterCell = styled.div`
   ${baseFooterCell}
 
   ${(props) => {
+    if (props.comment && !props.editable)
+      return `width: 55%; padding-left: 8px; font-weight: 500; justify-content: flex-start;`;
     if (props.comment)
       return `width: 62%; padding-left: 8px; font-weight: 500; justify-content: flex-start;`;
+
+    if (props.money && props.subtotal && !props.editable)
+      return `width: 15%; justify-content: flex-end; font-weight: 700;`;
+    if (props.money && !props.editable)
+      return `width: 15%; justify-content: flex-end;`;
+    if (props.tax && !props.editable)
+      return `width: 15%; justify-content: flex-end; font-weight: 600;`;
+
     if (props.money && props.subtotal)
       return `width: 13%; justify-content: flex-end; font-weight: 700;`;
     if (props.money) return `width: 12%; justify-content: flex-end;`;

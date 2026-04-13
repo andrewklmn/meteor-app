@@ -83,12 +83,12 @@ export const PaymentList = ({
         </SC.TableHeader>
       ) : (
         <SC.TableHeader>
-          <SC.HeaderCell date>Дата</SC.HeaderCell>
-          <SC.HeaderCell money>Дохід</SC.HeaderCell>
-          <SC.HeaderCell money>Повернення</SC.HeaderCell>
-          <SC.HeaderCell comment>Прибуток</SC.HeaderCell>
-          <SC.HeaderCell tax>ЄП, {taxPercent}%</SC.HeaderCell>
-          <SC.HeaderCell tax>ВЗ, {warTaxPercent}%</SC.HeaderCell>
+          <SC.DateHeader>Дата</SC.DateHeader>
+          <SC.MoneyHeader>Дохід</SC.MoneyHeader>
+          <SC.MoneyHeader>Повернення</SC.MoneyHeader>
+          <SC.SubtotalHeader>Прибуток</SC.SubtotalHeader>
+          <SC.TaxHeader>ЄП, {taxPercent}%</SC.TaxHeader>
+          <SC.TaxHeader>ВЗ, {warTaxPercent}%</SC.TaxHeader>
         </SC.TableHeader>
       )}
 
@@ -124,18 +124,22 @@ export const PaymentList = ({
 
         const monthInfo = (
           <SC.TableFooter key={`${year}-${month}`}>
-            <SC.FooterCell comment>
+            <SC.FooterCell comment editable={editable}>
               Всього за {ukrMonths[month]} {year}:
             </SC.FooterCell>
-            <SC.FooterCell money subtotal>
+            <SC.FooterCell money subtotal editable={editable}>
               {formatCurrency(
                 editable
                   ? monthIncome - monthExpence - monthTax - monthWarTax
                   : monthIncome - monthExpence,
               )}
             </SC.FooterCell>
-            <SC.FooterCell tax>{formatCurrency(monthTax)}</SC.FooterCell>
-            <SC.FooterCell tax>{formatCurrency(monthWarTax)}</SC.FooterCell>
+            <SC.FooterCell tax editable={editable}>
+              {formatCurrency(monthTax)}
+            </SC.FooterCell>
+            <SC.FooterCell tax editable={editable}>
+              {formatCurrency(monthWarTax)}
+            </SC.FooterCell>
           </SC.TableFooter>
         );
 
@@ -143,25 +147,31 @@ export const PaymentList = ({
       })}
 
       <SC.TableFooter>
-        <SC.FooterCell comment>
+        <SC.FooterCell comment editable={editable}>
           Разом за {quarter}-й квартал {year}:
         </SC.FooterCell>
-        <SC.FooterCell money subtotal>
+        <SC.FooterCell money subtotal editable={editable}>
           {formatCurrency(
             editable
               ? incomeSum - expenceSum - taxSum - warTaxSum
               : incomeSum - expenceSum,
           )}
         </SC.FooterCell>
-        <SC.FooterCell tax>{formatCurrency(taxSum)}</SC.FooterCell>
-        <SC.FooterCell tax>{formatCurrency(warTaxSum)}</SC.FooterCell>
+        <SC.FooterCell tax editable={editable}>
+          {formatCurrency(taxSum)}
+        </SC.FooterCell>
+        <SC.FooterCell tax editable={editable}>
+          {formatCurrency(warTaxSum)}
+        </SC.FooterCell>
       </SC.TableFooter>
 
       <SC.TableFooter>
-        <SC.FooterCell comment>Податків за {quarter}-й квартал:</SC.FooterCell>
-        <SC.FooterCell money></SC.FooterCell>
-        <SC.FooterCell tax></SC.FooterCell>
-        <SC.FooterCell tax>
+        <SC.FooterCell comment editable={editable}>
+          Податків за {quarter}-й квартал:
+        </SC.FooterCell>
+        <SC.FooterCell money editable={editable}></SC.FooterCell>
+        <SC.FooterCell tax editable={editable}></SC.FooterCell>
+        <SC.FooterCell tax editable={editable}>
           {(
             Math.round(taxSum * 100) / 100 +
             Math.round(warTaxSum * 100) / 100
@@ -171,46 +181,64 @@ export const PaymentList = ({
 
       {quarter === 2 && (
         <SC.TableFooter key={`${year}-${quarter}-half`}>
-          <SC.FooterCell comment>Результат за півріччя, грн:</SC.FooterCell>
-          <SC.FooterCell money subtotal>
+          <SC.FooterCell comment editable={editable}>
+            Результат за півріччя, грн:
+          </SC.FooterCell>
+          <SC.FooterCell money subtotal editable={editable}>
             {formatCurrency(
               editable
                 ? result.income - result.expence - result.tax - result.warTax
                 : result.income - result.expence,
             )}
           </SC.FooterCell>
-          <SC.FooterCell tax>{formatCurrency(result.tax)}</SC.FooterCell>
-          <SC.FooterCell tax>{formatCurrency(result.warTax)}</SC.FooterCell>
+          <SC.FooterCell tax editable={editable}>
+            {formatCurrency(result.tax)}
+          </SC.FooterCell>
+          <SC.FooterCell tax editable={editable}>
+            {formatCurrency(result.warTax)}
+          </SC.FooterCell>
         </SC.TableFooter>
       )}
 
       {quarter === 3 && (
         <SC.TableFooter key={`${year}-${quarter}-9m`}>
-          <SC.FooterCell comment>Результат за 9 місяців, грн:</SC.FooterCell>
-          <SC.FooterCell money subtotal>
+          <SC.FooterCell comment editable={editable}>
+            Результат за 9 місяців, грн:
+          </SC.FooterCell>
+          <SC.FooterCell money subtotal editable={editable}>
             {formatCurrency(
               editable
                 ? result.income - result.expence - result.tax - result.warTax
                 : result.income - result.expence,
             )}
           </SC.FooterCell>
-          <SC.FooterCell tax>{formatCurrency(result.tax)}</SC.FooterCell>
-          <SC.FooterCell tax>{formatCurrency(result.warTax)}</SC.FooterCell>
+          <SC.FooterCell tax editable={editable}>
+            {formatCurrency(result.tax)}
+          </SC.FooterCell>
+          <SC.FooterCell tax editable={editable}>
+            {formatCurrency(result.warTax)}
+          </SC.FooterCell>
         </SC.TableFooter>
       )}
 
       {quarter === 4 && (
         <SC.TableFooter key={`${year}-${quarter}-year`}>
-          <SC.FooterCell comment>Результат за рік, грн:</SC.FooterCell>
-          <SC.FooterCell money subtotal>
+          <SC.FooterCell comment editable={editable}>
+            Результат за рік, грн:
+          </SC.FooterCell>
+          <SC.FooterCell money subtotal editable={editable}>
             {formatCurrency(
               editable
                 ? result.income - result.expence - result.tax - result.warTax
                 : result.income - result.expence,
             )}
           </SC.FooterCell>
-          <SC.FooterCell tax>{formatCurrency(result.tax)}</SC.FooterCell>
-          <SC.FooterCell tax>{formatCurrency(result.warTax)}</SC.FooterCell>
+          <SC.FooterCell tax editable={editable}>
+            {formatCurrency(result.tax)}
+          </SC.FooterCell>
+          <SC.FooterCell tax editable={editable}>
+            {formatCurrency(result.warTax)}
+          </SC.FooterCell>
         </SC.TableFooter>
       )}
     </SC.Container>

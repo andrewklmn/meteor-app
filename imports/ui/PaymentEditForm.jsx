@@ -118,91 +118,165 @@ export const PaymentEditForm = ({ payment, editable }) => {
   return (
     <>
       <SC.Form onKeyUp={cancelEditor} onSubmit={handleSubmit}>
-        <SC.InputCell date>
-          <input
-            type="text"
-            className="date disabled"
-            placeholder="Date of payment"
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
-            onBlur={handleBlur}
-            onFocus={handleFocus}
-            onKeyUp={handleKeyUp}
-            readOnly={!editable}
-            aria-label="Дата"
-          />
-        </SC.InputCell>
-        <SC.InputCell money income>
-          <input
-            type="text"
-            className="money income disabled"
-            placeholder="Додай суму"
-            value={income}
-            onChange={(e) => setIncome(handleNumberChange(e))}
-            onBlur={handleBlur}
-            onFocus={handleFocus}
-            onKeyUp={handleKeyUp}
-            readOnly={!editable}
-            aria-label="Дохід"
-          />
-        </SC.InputCell>
-        <SC.InputCell money expence>
-          <input
-            type="text"
-            className="money expence disabled"
-            placeholder="Додай суму"
-            value={expence}
-            onChange={(e) => setExpence(handleNumberChange(e))}
-            onBlur={handleBlur}
-            onFocus={handleFocus}
-            onKeyUp={handleKeyUp}
-            readOnly={!editable}
-            aria-label="Повернення"
-          />
-        </SC.InputCell>
         {editable ? (
-          <SC.InputCell comment>
-            <input
-              type="text"
-              className="comment disabled"
-              placeholder="Add your comment here"
-              value={comment}
-              onChange={(e) => setComment(e.target.value)}
-              onBlur={handleBlur}
-              onFocus={handleFocus}
-              onKeyUp={handleKeyUp}
-              readOnly={!editable}
-              aria-label="Коментар"
-            />
-          </SC.InputCell>
-        ) : null}
-        <SC.InputCell money readonly>
-          <input
-            type="text"
-            className="moneySubtotal disabled"
-            readOnly
-            value={formatCurrency(subtotal)}
-            aria-label="На руки"
-          />
-        </SC.InputCell>
-        <SC.InputCell tax readonly>
-          <input
-            type="text"
-            className="tax disabled"
-            readOnly
-            value={formatCurrency(tax)}
-            aria-label="ЄП"
-          />
-        </SC.InputCell>
-        <SC.InputCell tax readonly>
-          <input
-            type="text"
-            className="tax disabled"
-            readOnly
-            value={formatCurrency(warTax)}
-            aria-label="ВЗ"
-          />
-        </SC.InputCell>
+          <>
+            <SC.InputCell date>
+              <input
+                type="text"
+                className="date disabled"
+                placeholder="Date of payment"
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
+                onBlur={handleBlur}
+                onFocus={handleFocus}
+                onKeyUp={handleKeyUp}
+                readOnly={!editable}
+                aria-label="Дата"
+              />
+            </SC.InputCell>
+            <SC.InputCell money income>
+              <input
+                type="text"
+                className="money income disabled"
+                placeholder="Додай суму"
+                value={income}
+                onChange={(e) => setIncome(handleNumberChange(e))}
+                onBlur={handleBlur}
+                onFocus={handleFocus}
+                onKeyUp={handleKeyUp}
+                readOnly={!editable}
+                aria-label="Дохід"
+              />
+            </SC.InputCell>
+            <SC.InputCell money expence>
+              <input
+                type="text"
+                className="money expence disabled"
+                placeholder="Додай суму"
+                value={expence}
+                onChange={(e) => setExpence(handleNumberChange(e))}
+                onBlur={handleBlur}
+                onFocus={handleFocus}
+                onKeyUp={handleKeyUp}
+                readOnly={!editable}
+                aria-label="Повернення"
+              />
+            </SC.InputCell>
+            <SC.InputCell comment>
+              <input
+                type="text"
+                className="comment disabled"
+                placeholder="Add your comment here"
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
+                onBlur={handleBlur}
+                onFocus={handleFocus}
+                onKeyUp={handleKeyUp}
+                readOnly={!editable}
+                aria-label="Коментар"
+              />
+            </SC.InputCell>
+            <SC.InputCell money readonly>
+              <input
+                type="text"
+                className="moneySubtotal disabled"
+                readOnly
+                value={formatCurrency(subtotal)}
+                aria-label="На руки"
+              />
+            </SC.InputCell>
+            <SC.InputCell tax readonly>
+              <input
+                type="text"
+                className="tax disabled"
+                readOnly
+                value={formatCurrency(tax)}
+                aria-label="ЄП"
+              />
+            </SC.InputCell>
+            <SC.InputCell tax readonly>
+              <input
+                type="text"
+                className="tax disabled"
+                readOnly
+                value={formatCurrency(warTax)}
+                aria-label="ВЗ"
+              />
+            </SC.InputCell>
+          </>
+        ) : (
+          <>
+            <SC.ReadonlyInputCell date>
+              <input
+                type="text"
+                className="date disabled"
+                placeholder="Date of payment"
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
+                onBlur={handleBlur}
+                onFocus={handleFocus}
+                onKeyUp={handleKeyUp}
+                readOnly
+                aria-label="Дата"
+              />
+            </SC.ReadonlyInputCell>
+            <SC.ReadonlyInputCell money income>
+              <input
+                type="text"
+                className="money income disabled"
+                placeholder="Додай суму"
+                value={income}
+                onChange={(e) => setIncome(handleNumberChange(e))}
+                onBlur={handleBlur}
+                onFocus={handleFocus}
+                onKeyUp={handleKeyUp}
+                readOnly={!editable}
+                aria-label="Дохід"
+              />
+            </SC.ReadonlyInputCell>
+            <SC.ReadonlyInputCell money expence>
+              <input
+                type="text"
+                className="money expence disabled"
+                placeholder="Додай суму"
+                value={expence}
+                onChange={(e) => setExpence(handleNumberChange(e))}
+                onBlur={handleBlur}
+                onFocus={handleFocus}
+                onKeyUp={handleKeyUp}
+                readOnly={!editable}
+                aria-label="Повернення"
+              />
+            </SC.ReadonlyInputCell>
+            <SC.ReadonlyInputCell money readonly>
+              <input
+                type="text"
+                className="moneySubtotal disabled"
+                readOnly
+                value={formatCurrency(subtotal)}
+                aria-label="На руки"
+              />
+            </SC.ReadonlyInputCell>
+            <SC.ReadonlyInputCell tax readonly>
+              <input
+                type="text"
+                className="tax disabled"
+                readOnly
+                value={formatCurrency(tax)}
+                aria-label="ЄП"
+              />
+            </SC.ReadonlyInputCell>
+            <SC.ReadonlyInputCell tax readonly>
+              <input
+                type="text"
+                className="tax disabled"
+                readOnly
+                value={formatCurrency(warTax)}
+                aria-label="ВЗ"
+              />
+            </SC.ReadonlyInputCell>
+          </>
+        )}
       </SC.Form>
       {error && <SC.Error role="alert">{error}</SC.Error>}
       <PaymentMobileCard payment={payment} editable={editable} />
