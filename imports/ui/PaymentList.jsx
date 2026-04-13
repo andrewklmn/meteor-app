@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { PaymentEditForm } from "./PaymentEditForm";
 import {
   getWarTaxPercent,
@@ -7,6 +7,13 @@ import {
 } from "../constants/taxes";
 import * as SC from "./PaymentList.sc";
 import { ukrMonths } from "../constants/ukrMonths";
+
+const formatCurrency = (value) => {
+  return Number(value).toLocaleString("uk-UA", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+};
 
 export const PaymentList = ({
   editable,
@@ -44,50 +51,47 @@ export const PaymentList = ({
   const startMonth = Number(from.substr(5, 2));
   const stopMonth = Number(to.substr(5, 2));
 
-  const generateMothRange = (from, to) => {
+  const generateMonthRange = (from, to) => {
     const months = [];
     for (let i = from; i <= to; i++) {
-      if (i < 10) {
-        months.push("0" + i);
-      } else {
-        months.push(String(i));
-      }
+      months.push(i < 10 ? "0" + i : String(i));
     }
     return months;
   };
 
-  const months = generateMothRange(startMonth, stopMonth);
+  const months = generateMonthRange(startMonth, stopMonth);
 
   return (
     <SC.Container>
-      <SC.Title>
-        {quarter}-й квартал {year}
-      </SC.Title>
+      <SC.Title>{quarter}-й квартал {year}</SC.Title>
+
       {editable ? (
         <SC.TableHeader>
-          <SC.EditorDateHeader>Дата</SC.EditorDateHeader>
-          <SC.EditorMoneyHeader>Дохід</SC.EditorMoneyHeader>
-          <SC.EditorMoneyHeader>Повернення</SC.EditorMoneyHeader>
-          <SC.EditorCommentHeader>Опис</SC.EditorCommentHeader>
-          <SC.EditorSubtotalHeader>На руки</SC.EditorSubtotalHeader>
-          <SC.EditorTaxHeader>ЄП, {taxPercent}%</SC.EditorTaxHeader>
-          <SC.EditorTaxHeader>ВЗ, {warTaxPercent}%</SC.EditorTaxHeader>
+          <SC.HeaderCell date>Дата</SC.HeaderCell>
+          <SC.HeaderCell money income>Дохід</SC.HeaderCell>
+          <SC.HeaderCell money expence>Повернення</SC.HeaderCell>
+          <SC.HeaderCell comment>Опис</SC.HeaderCell>
+          <SC.HeaderCell money>На руки</SC.HeaderCell>
+          <SC.HeaderCell tax>ЄП, {taxPercent}%</SC.HeaderCell>
+          <SC.HeaderCell tax>ВЗ, {warTaxPercent}%</SC.HeaderCell>
         </SC.TableHeader>
       ) : (
         <SC.TableHeader>
-          <SC.DateHeader>Дата</SC.DateHeader>
-          <SC.MoneyHeader>Дохід</SC.MoneyHeader>
-          <SC.MoneyHeader>Повернення</SC.MoneyHeader>
-          <SC.SubtotalHeader>Прибуток</SC.SubtotalHeader>
-          <SC.TaxHeader>ЄП, {taxPercent}%</SC.TaxHeader>
-          <SC.EditorTaxHeader>ВЗ, {warTaxPercent}%</SC.EditorTaxHeader>
+          <SC.HeaderCell date>Дата</SC.HeaderCell>
+          <SC.HeaderCell money>Дохід</SC.HeaderCell>
+          <SC.HeaderCell money>Повернення</SC.HeaderCell>
+          <SC.HeaderCell comment>Прибуток</SC.HeaderCell>
+          <SC.HeaderCell tax>ЄП, {taxPercent}%</SC.HeaderCell>
+          <SC.HeaderCell tax>ВЗ, {warTaxPercent}%</SC.HeaderCell>
         </SC.TableHeader>
       )}
+
       {months.map((month) => {
         let monthIncome = 0;
         let monthExpence = 0;
         let monthTax = 0;
         let monthWarTax = 0;
+
         const list = payments.map((payment) => {
           if (payment.createdAt.substr(5, 2) !== month) return null;
 
@@ -111,130 +115,124 @@ export const PaymentList = ({
             />
           );
         });
+
         const monthInfo = (
           <SC.TableFooter key={`${year}-${month}`}>
-            <SC.monthCommentTotal>
-              Всього за {ukrMonths[month]} {from.substr(0, 4)}-го:
-            </SC.monthCommentTotal>
-            <SC.monthSubtotalTotal>
-              {Math.round(
-                (editable
+            <SC.FooterCell comment>
+              Всього за {ukrMonths[month]} {year}:
+            </SC.FooterCell>
+            <SC.FooterCell money subtotal>
+              {formatCurrency(
+                editable
                   ? monthIncome - monthExpence - monthTax - monthWarTax
-                  : monthIncome - monthExpence) * 100,
-              ) / 100}
-            </SC.monthSubtotalTotal>
-            <SC.monthTaxTotal>
-              {Math.round(monthTax * 100) / 100}
-            </SC.monthTaxTotal>
-            <SC.monthTaxTotal>
-              {Math.round(monthWarTax * 100) / 100}
-            </SC.monthTaxTotal>
+                  : monthIncome - monthExpence,
+              )}
+            </SC.FooterCell>
+            <SC.FooterCell tax>
+              {formatCurrency(monthTax)}
+            </SC.FooterCell>
+            <SC.FooterCell tax>
+              {formatCurrency(monthWarTax)}
+            </SC.FooterCell>
           </SC.TableFooter>
         );
 
         return [...list.reverse(), monthInfo];
       })}
+
       <SC.TableFooter>
-        <SC.CommentTotal>
-          Разом за {quarter}-й квартал {year}-го:
-        </SC.CommentTotal>
-        {editable ? (
-          <SC.SubtotalTotal>
-            {Math.round((incomeSum - expenceSum - taxSum - warTaxSum) * 100) /
-              100}
-          </SC.SubtotalTotal>
-        ) : (
-          <SC.SubtotalTotal>
-            {Math.round((incomeSum - expenceSum) * 100) / 100}
-          </SC.SubtotalTotal>
-        )}
-        <SC.TaxTotal>{Math.round(taxSum * 100) / 100}</SC.TaxTotal>
-        <SC.TaxTotal>{Math.round(warTaxSum * 100) / 100}</SC.TaxTotal>
+        <SC.FooterCell comment>
+          Разом за {quarter}-й квартал {year}:
+        </SC.FooterCell>
+        <SC.FooterCell money subtotal>
+          {formatCurrency(
+            editable
+              ? incomeSum - expenceSum - taxSum - warTaxSum
+              : incomeSum - expenceSum,
+          )}
+        </SC.FooterCell>
+        <SC.FooterCell tax>
+          {formatCurrency(taxSum)}
+        </SC.FooterCell>
+        <SC.FooterCell tax>
+          {formatCurrency(warTaxSum)}
+        </SC.FooterCell>
       </SC.TableFooter>
+
       <SC.TableFooter>
-        <SC.monthCommentTotal>
+        <SC.FooterCell comment>
           Податків за {quarter}-й квартал:
-        </SC.monthCommentTotal>
-        <SC.monthSubtotalTotal></SC.monthSubtotalTotal>
-        <SC.monthSubtotalTotal></SC.monthSubtotalTotal>
-        <SC.monthTaxTotal>
+        </SC.FooterCell>
+        <SC.FooterCell money></SC.FooterCell>
+        <SC.FooterCell tax>
           {(
             Math.round(taxSum * 100) / 100 +
             Math.round(warTaxSum * 100) / 100
           ).toFixed(2)}
-        </SC.monthTaxTotal>
+        </SC.FooterCell>
+        <SC.FooterCell tax></SC.FooterCell>
       </SC.TableFooter>
+
       {quarter === 2 && (
-        <SC.TableFooter key={`${year}-${quarter}`}>
-          <SC.monthCommentTotal>
+        <SC.TableFooter key={`${year}-${quarter}-half`}>
+          <SC.FooterCell comment>
             Результат за півріччя, грн:
-          </SC.monthCommentTotal>
-          {editable ? (
-            <SC.monthSubtotalTotal>
-              {Math.round(
-                (result.income - result.expence - result.tax - result.warTax) *
-                  100,
-              ) / 100}
-            </SC.monthSubtotalTotal>
-          ) : (
-            <SC.monthSubtotalTotal>
-              {Math.round((result.income - result.expence) * 100) / 100}
-            </SC.monthSubtotalTotal>
-          )}
-          <SC.monthTaxTotal>
-            {Math.round(result.tax * 100) / 100}
-          </SC.monthTaxTotal>
-          <SC.monthTaxTotal>
-            {Math.round(result.warTax * 100) / 100}
-          </SC.monthTaxTotal>
+          </SC.FooterCell>
+          <SC.FooterCell money subtotal>
+            {formatCurrency(
+              editable
+                ? result.income - result.expence - result.tax - result.warTax
+                : result.income - result.expence,
+            )}
+          </SC.FooterCell>
+          <SC.FooterCell tax>
+            {formatCurrency(result.tax)}
+          </SC.FooterCell>
+          <SC.FooterCell tax>
+            {formatCurrency(result.warTax)}
+          </SC.FooterCell>
         </SC.TableFooter>
       )}
+
       {quarter === 3 && (
-        <SC.TableFooter key={`${year}-${quarter}`}>
-          <SC.monthCommentTotal>
+        <SC.TableFooter key={`${year}-${quarter}-9m`}>
+          <SC.FooterCell comment>
             Результат за 9 місяців, грн:
-          </SC.monthCommentTotal>
-          {editable ? (
-            <SC.monthSubtotalTotal>
-              {Math.round(
-                (result.income - result.expence - result.tax - result.warTax) *
-                  100,
-              ) / 100}
-            </SC.monthSubtotalTotal>
-          ) : (
-            <SC.monthSubtotalTotal>
-              {Math.round((result.income - result.expence) * 100) / 100}
-            </SC.monthSubtotalTotal>
-          )}
-          <SC.monthTaxTotal>
-            {Math.round(result.tax * 100) / 100}
-          </SC.monthTaxTotal>
-          <SC.monthTaxTotal>
-            {Math.round(result.warTax * 100) / 100}
-          </SC.monthTaxTotal>
+          </SC.FooterCell>
+          <SC.FooterCell money subtotal>
+            {formatCurrency(
+              editable
+                ? result.income - result.expence - result.tax - result.warTax
+                : result.income - result.expence,
+            )}
+          </SC.FooterCell>
+          <SC.FooterCell tax>
+            {formatCurrency(result.tax)}
+          </SC.FooterCell>
+          <SC.FooterCell tax>
+            {formatCurrency(result.warTax)}
+          </SC.FooterCell>
         </SC.TableFooter>
       )}
+
       {quarter === 4 && (
-        <SC.TableFooter key={`${year}-${quarter}`}>
-          <SC.monthCommentTotal>Результат за рік, грн:</SC.monthCommentTotal>
-          {editable ? (
-            <SC.monthSubtotalTotal>
-              {Math.round(
-                (result.income - result.expence - result.tax - result.warTax) *
-                  100,
-              ) / 100}
-            </SC.monthSubtotalTotal>
-          ) : (
-            <SC.monthSubtotalTotal>
-              {Math.round((result.income - result.expence) * 100) / 100}
-            </SC.monthSubtotalTotal>
-          )}
-          <SC.monthTaxTotal>
-            {Math.round(result.tax * 100) / 100}
-          </SC.monthTaxTotal>
-          <SC.monthTaxTotal>
-            {Math.round(result.warTax * 100) / 100}
-          </SC.monthTaxTotal>
+        <SC.TableFooter key={`${year}-${quarter}-year`}>
+          <SC.FooterCell comment>
+            Результат за рік, грн:
+          </SC.FooterCell>
+          <SC.FooterCell money subtotal>
+            {formatCurrency(
+              editable
+                ? result.income - result.expence - result.tax - result.warTax
+                : result.income - result.expence,
+            )}
+          </SC.FooterCell>
+          <SC.FooterCell tax>
+            {formatCurrency(result.tax)}
+          </SC.FooterCell>
+          <SC.FooterCell tax>
+            {formatCurrency(result.warTax)}
+          </SC.FooterCell>
         </SC.TableFooter>
       )}
     </SC.Container>

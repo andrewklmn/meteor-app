@@ -45,38 +45,65 @@ export const PaymentAddForm = ({ user }) => {
 
   return (
     <SC.Container className="hideOnPrint">
-      <SC.Form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          className="date"
-          placeholder="Дата"
-          value={date}
-          onChange={(e) => setDate(e.target.value)}
-        />
-        <input
-          type="text"
-          className="money income"
-          placeholder="Дохід"
-          value={income}
-          onChange={(e) => setIncome(handleNumberChange(e))}
-        />
-        <input
-          type="text"
-          className="money expence"
-          placeholder="Повернення"
-          value={expence}
-          onChange={(e) => setExpence(handleNumberChange(e))}
-        />
-        <input
-          type="text"
-          className="comment"
-          placeholder="Коментар"
-          value={comment}
-          onChange={(e) => setComment(e.target.value)}
-        />
-        <SC.Button type="submit">Додати платіж</SC.Button>
-      </SC.Form>
-      {error && <div className="error">{error}</div>}
+      <SC.Card>
+        <SC.CardTitle>➕ Додати платіж</SC.CardTitle>
+        <SC.Form onSubmit={handleSubmit}>
+          <SC.FieldGroup>
+            <SC.Field>
+              <SC.Label htmlFor="payment-date">Дата</SC.Label>
+              <SC.Input
+                id="payment-date"
+                type="date"
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
+                aria-label="Дата платежу"
+              />
+            </SC.Field>
+
+            <SC.Field>
+              <SC.Label htmlFor="payment-income">Дохід</SC.Label>
+              <SC.Input
+                id="payment-income"
+                type="text"
+                inputMode="decimal"
+                placeholder="0.00"
+                value={income}
+                onChange={(e) => setIncome(handleNumberChange(e))}
+                aria-label="Сума доходу"
+              />
+            </SC.Field>
+
+            <SC.Field>
+              <SC.Label htmlFor="payment-expence">Повернення</SC.Label>
+              <SC.Input
+                id="payment-expence"
+                type="text"
+                inputMode="decimal"
+                placeholder="0.00"
+                value={expence}
+                onChange={(e) => setExpence(handleNumberChange(e))}
+                aria-label="Сума повернення"
+              />
+            </SC.Field>
+
+            <SC.Field className="comment-field">
+              <SC.Label htmlFor="payment-comment">Коментар</SC.Label>
+              <SC.Input
+                id="payment-comment"
+                type="text"
+                placeholder="Опис платежу"
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
+                aria-label="Коментар"
+              />
+            </SC.Field>
+          </SC.FieldGroup>
+
+          <SC.Button type="submit">Додати платіж</SC.Button>
+        </SC.Form>
+
+        {error && <SC.Error role="alert">{error}</SC.Error>}
+      </SC.Card>
     </SC.Container>
   );
 };

@@ -8,8 +8,8 @@ import { Payments } from "./Payments";
 export const Report = ({ user, year, client, setClient }) => {
   const users = useTracker(() =>
     UsersCollection.find(
-      { 
-        // role: 'user' 
+      {
+        // role: 'user'
       },
       {
         sort: { createdAt: -1 },
@@ -17,20 +17,39 @@ export const Report = ({ user, year, client, setClient }) => {
     ).fetch()
   );
 
+  const selectedUser = users.find((u) => u._id === client);
+
   return (
     <SC.Container>
-      <SC.ClientSelector className="hideOnPrint" >
-        <SC.Label>Звіт для:</SC.Label>
-        <SC.Select value={client} onChange={(e) => setClient(e.target.value)}>
-          <option value="">Віберіть ФОП</option>
-          {users.map(user => <option key={user._id} value={user._id}>{capitalizeFirstLetter(user.login)}</option>)}
-        </SC.Select>
-        <SC.Button type="button">Додати нового</SC.Button>
+      <SC.ClientSelector className="hideOnPrint">
+        <SC.SelectHeader>
+          <SC.Label htmlFor="client-select">📋 Звіт для:</SC.Label>
+          <SC.Select
+            id="client-select"
+            value={client}
+            onChange={(e) => setClient(e.target.value)}
+            aria-label="Оберіть клієнта"
+          >
+            <option value="">Віберіть ФОП</option>
+            {users.map((u) => (
+              <option key={u._id} value={u._id}>
+                {capitalizeFirstLetter(u.login)}
+              </option>
+            ))}
+          </SC.Select>
+        </SC.SelectHeader>
       </SC.ClientSelector>
-      <SC.Requisits className="showOnPrint">
-        Шапка отчёта для ФОП в налоговую
-      </SC.Requisits>
-      {client && <Payments user={{ id: client }} year={year} admin={user}/>}
+
+      {selectedUser && (
+        <SC.SelectedClient className="showOnPrint">
+          <SC.ClientBadge>
+            <SC.ClientIcon>👤</SC.ClientIcon>
+            <span>ФОП: {capitalizeFirstLetter(selectedUser.login)}</span>
+          </SC.ClientBadge>
+        </SC.SelectedClient>
+      )}
+
+      {client && <Payments user={{ id: client }} year={year} admin={user} />}
     </SC.Container>
   );
 };

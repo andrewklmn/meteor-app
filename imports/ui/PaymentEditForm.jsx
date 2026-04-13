@@ -3,11 +3,18 @@ import { PaymentsCollection } from "/imports/api/PaymentsCollection";
 import { getWarTaxPercent, taxPercent } from "../constants/taxes";
 import { handleNumberChange } from "../helpers/handleNumberChange";
 import * as SC from "./PaymentEditForm.sc";
+import { PaymentMobileCard } from "./components/PaymentMobileCard";
+
+const formatDate = (d) => {
+  if (typeof d === "string") return d.substr(0, 10);
+  const date = new Date(d);
+  return date.toISOString().substr(0, 10);
+};
 
 export const PaymentEditForm = ({ payment, editable }) => {
   const [oldValue, setOldValue] = useState(payment);
   const [isEditor, setIsEditor] = useState(false);
-  const [date, setDate] = useState(payment.createdAt.substr(0, 10));
+  const [date, setDate] = useState(formatDate(payment.createdAt));
   const [income, setIncome] = useState(payment.income);
   const [expence, setExpence] = useState(payment.expence);
   const [comment, setComment] = useState(payment.comment);
@@ -15,7 +22,7 @@ export const PaymentEditForm = ({ payment, editable }) => {
 
   const isRecordEdited = () => {
     if (
-      date === oldValue.createdAt.substr(0, 10) &&
+      date === formatDate(oldValue.createdAt) &&
       income === oldValue.income &&
       expence === oldValue.expence &&
       comment === oldValue.comment
@@ -93,79 +100,110 @@ export const PaymentEditForm = ({ payment, editable }) => {
     }
   };
 
+  const subtotal = Math.round(
+    (income - expence) * (editable ? 100 - taxPercent - getWarTaxPercent(date) : 100)
+  ) / 100;
+  const tax = Math.round((income - expence) * taxPercent) / 100;
+  const warTax = Math.round((income - expence) * getWarTaxPercent(date)) / 100;
+
+  const formatCurrency = (value) => {
+    return Number(value).toLocaleString("uk-UA", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
+  };
+
   return (
     <>
       <SC.Form onKeyUp={cancelEditor} onSubmit={handleSubmit}>
-        <input
-          type="text"
-          className="date disabled"
-          placeholder="Date of payment"
-          value={date}
-          onChange={(e) => setDate(e.target.value)}
-          onBlur={handleBlur}
-          onFocus={handleFocus}
-          onKeyUp={handleKeyUp}
-          readOnly={!editable}
-        />
-        <input
-          type="text"
-          className="money income disabled"
-          placeholder="Додай суму"
-          value={income}
-          onChange={(e) => setIncome(handleNumberChange(e))}
-          onBlur={handleBlur}
-          onFocus={handleFocus}
-          onKeyUp={handleKeyUp}
-          readOnly={!editable}
-        />
-        <input
-          type="text"
-          className="money expence disabled"
-          placeholder="Додай суму"
-          value={expence}
-          onChange={(e) => setExpence(handleNumberChange(e))}
-          onBlur={handleBlur}
-          onFocus={handleFocus}
-          onKeyUp={handleKeyUp}
-          readOnly={!editable}
-        />
-        {editable && (
+        <SC.InputCell date>
           <input
             type="text"
-            className="comment disabled"
-            placeholder="Add your comment here"
-            value={comment}
-            onChange={(e) => setComment(e.target.value)}
+            className="date disabled"
+            placeholder="Date of payment"
+            value={date}
+            onChange={(e) => setDate(e.target.value)}
             onBlur={handleBlur}
             onFocus={handleFocus}
             onKeyUp={handleKeyUp}
             readOnly={!editable}
+            aria-label="Дата"
           />
+        </SC.InputCell>
+        <SC.InputCell money income>
+          <input
+            type="text"
+            className="money income disabled"
+            placeholder="Додай суму"
+            value={income}
+            onChange={(e) => setIncome(handleNumberChange(e))}
+            onBlur={handleBlur}
+            onFocus={handleFocus}
+            onKeyUp={handleKeyUp}
+            readOnly={!editable}
+            aria-label="Дохід"
+          />
+        </SC.InputCell>
+        <SC.InputCell money expence>
+          <input
+            type="text"
+            className="money expence disabled"
+            placeholder="Додай суму"
+            value={expence}
+            onChange={(e) => setExpence(handleNumberChange(e))}
+            onBlur={handleBlur}
+            onFocus={handleFocus}
+            onKeyUp={handleKeyUp}
+            readOnly={!editable}
+            aria-label="Повернення"
+          />
+        </SC.InputCell>
+        {editable && (
+          <SC.InputCell comment>
+            <input
+              type="text"
+              className="comment disabled"
+              placeholder="Add your comment here"
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
+              onBlur={handleBlur}
+              onFocus={handleFocus}
+              onKeyUp={handleKeyUp}
+              readOnly={!editable}
+              aria-label="Коментар"
+            />
+          </SC.InputCell>
         )}
-        <input
-          type="text"
-          className="moneySubtotal disabled"
-          readOnly
-          value={
-            Math.round(
-              (income - expence) * (editable ? 100 - taxPercent - getWarTaxPercent(date) : 100)
-            ) / 100
-          }
-        />
-        <input
-          type="text"
-          className="tax disabled"
-          readOnly
-          value={Math.round((income - expence) * taxPercent) / 100}
-        />
-        <input
-          type="text"
-          className="tax disabled"
-          readOnly
-          value={Math.round((income - expence) * getWarTaxPercent(date)) / 100}
-        />
+        <SC.InputCell money readonly>
+          <input
+            type="text"
+            className="moneySubtotal disabled"
+            readOnly
+            value={formatCurrency(subtotal)}
+            aria-label="На руки"
+          />
+        </SC.InputCell>
+        <SC.InputCell tax readonly>
+          <input
+            type="text"
+            className="tax disabled"
+            readOnly
+            value={formatCurrency(tax)}
+            aria-label="ЄП"
+          />
+        </SC.InputCell>
+        <SC.InputCell tax readonly>
+          <input
+            type="text"
+            className="tax disabled"
+            readOnly
+            value={formatCurrency(warTax)}
+            aria-label="ВЗ"
+          />
+        </SC.InputCell>
       </SC.Form>
-      {error && <div className="error">{error}</div>}
+      {error && <SC.Error role="alert">{error}</SC.Error>}
+      <PaymentMobileCard payment={payment} editable={editable} />
     </>
   );
 };

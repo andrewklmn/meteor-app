@@ -2,11 +2,12 @@
 import React, { useState } from "react";
 import md5 from "md5";
 import * as SC from "./Login.sc";
-import * as UI from "./components";
+import { Spinner } from "./Spinner";
 
 export const Login = ({ user, setUser, users }) => {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = ({ target: { name, value } }) => {
     setError("");
@@ -23,7 +24,7 @@ export const Login = ({ user, setUser, users }) => {
     users.forEach(({ _id, login, passwordHash, role }) => {
       if (login === user.login && passwordHash === md5(user.pass)) {
         foundId = _id;
-        foundRole = role; 
+        foundRole = role;
       }
     });
 
@@ -32,45 +33,69 @@ export const Login = ({ user, setUser, users }) => {
       localStorage.setItem("u", encodeURI(JSON.stringify(newUser)));
       setUser(newUser);
     } else {
-      setTimeout (() => {
+      setTimeout(() => {
         setError("Wrong login/pass");
-        setIsLoading(false)
+        setIsLoading(false);
       }, 1000);
-    };
+    }
   };
 
   return (
     <SC.Container>
-      <SC.Form onSubmit={handleSubmit}>
-        <UI.FlexColumn>
-          <h3>Please sign in:</h3>
-          {error && <SC.Error>Error: {error}<br /><br /></SC.Error>}
-          <SC.FieldRow>
-            <label>login:</label>
-            <input
+      <SC.Card>
+        <SC.Header>
+          <SC.Logo>📊</SC.Logo>
+          <SC.Title>Увійти в систему</SC.Title>
+          <SC.Subtitle>Введіть свої дані для входу</SC.Subtitle>
+        </SC.Header>
+
+        <SC.Form onSubmit={handleSubmit}>
+          {error && <SC.Alert role="alert">{error}</SC.Alert>}
+
+          <SC.Field>
+            <SC.Label htmlFor="login">Логін</SC.Label>
+            <SC.Input
+              id="login"
               type="text"
               name="login"
+              placeholder="Введіть логін"
               defaultValue={user.login}
               onChange={handleChange}
               disabled={isLoading}
+              autoComplete="username"
+              aria-label="Login"
             />
-          </SC.FieldRow>
-          <hr />
-          <SC.FieldRow>
-            <label>password:</label>
-            <input
-              type="password"
-              name="pass"
-              defaultValue={user.pass}
-              onChange={handleChange}
-              disabled={isLoading}
-            />
-          </SC.FieldRow>
-          <hr />
-          {!isLoading && <button type="submit">Sign in</button>}
-          {isLoading && <span>Loading...</span>}
-        </UI.FlexColumn>
-      </SC.Form>
+          </SC.Field>
+
+          <SC.Field>
+            <SC.Label htmlFor="pass">Пароль</SC.Label>
+            <SC.PasswordWrapper>
+              <SC.Input
+                id="pass"
+                type={showPassword ? "text" : "password"}
+                name="pass"
+                placeholder="Введіть пароль"
+                defaultValue={user.pass}
+                onChange={handleChange}
+                disabled={isLoading}
+                autoComplete="current-password"
+                aria-label="Password"
+              />
+              <SC.ToggleButton
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                aria-label={showPassword ? "Hide password" : "Show password"}
+                disabled={isLoading}
+              >
+                {showPassword ? "🙈" : "👁️"}
+              </SC.ToggleButton>
+            </SC.PasswordWrapper>
+          </SC.Field>
+
+          {!isLoading && <SC.Button type="submit">Увійти</SC.Button>}
+          {isLoading && <Spinner message="Вхід..." />}
+        </SC.Form>
+      </SC.Card>
     </SC.Container>
   );
 };
