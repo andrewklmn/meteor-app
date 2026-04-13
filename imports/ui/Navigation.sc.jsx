@@ -1,17 +1,27 @@
-import styled from '@emotion/styled';
-import * as LIB from './components';
-import { colors, shadows, borderRadius, transitions, typography } from '../constants/theme';
+import styled from "@emotion/styled";
+import * as LIB from "./components";
+import {
+  colors,
+  shadows,
+  borderRadius,
+  transitions,
+  typography,
+} from "../constants/theme";
 
 export const Container = styled(LIB.FlexRow)`
   justify-content: space-between;
   align-items: center;
-  width: calc(100% - 32px);
+  width: 100%;
   max-width: 800px;
   background: ${colors.headerBg};
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  background-image: linear-gradient(to bottom, ${colors.primaryGradientStart}, ${colors.primaryGradientEnd});
-  padding: 16px 20px;
+  background-image: linear-gradient(
+    to bottom,
+    ${colors.primaryGradientStart},
+    ${colors.primaryGradientEnd}
+  );
+  padding: 10px 20px;
   position: sticky;
   top: 0;
   z-index: 100;
@@ -43,15 +53,18 @@ export const Menu = styled(LIB.FlexRow)`
   }
 `;
 
-export const MenuItem = styled(LIB.FlexColumn, { shouldForwardProp: (prop) => prop !== 'active' })`
+export const MenuItem = styled(LIB.FlexColumn, {
+  shouldForwardProp: (prop) => prop !== "active",
+})`
   padding: 6px 12px;
   border-radius: ${borderRadius.sm};
-  background-color: ${(props) => (props.active ? 'rgba(49, 84, 129, 0.1)' : 'transparent')};
+  background-color: ${(props) =>
+    props.active ? "rgba(49, 84, 129, 0.1)" : "transparent"};
   transition: ${transitions.fast};
 
   & a {
     font-size: 0.95rem;
-    font-weight: ${(props) => (props.active ? '700' : '500')};
+    font-weight: ${(props) => (props.active ? "700" : "500")};
     text-decoration: none;
     color: ${(props) => (props.active ? colors.primary : colors.textLink)};
     cursor: pointer;

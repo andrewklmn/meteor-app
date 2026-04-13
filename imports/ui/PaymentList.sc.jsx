@@ -37,22 +37,22 @@ export const TableHeader = styled(LIB.FlexRow)`
   justify-content: flex-start;
   margin: 0;
   width: 100%;
-  min-height: 40px;
-  box-shadow: ${shadows.sm};
+  min-height: 32px;
+  background-color: ${colors.tableHeaderBg};
 `;
 
 const baseHeaderCell = `
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 8px 4px;
+  padding: 4px 4px;
   font-weight: 700;
   font-size: ${typography.xsmall};
   color: ${colors.textOnPrimary};
   background-color: ${colors.tableHeaderBg};
   text-transform: uppercase;
   letter-spacing: 0.3px;
-  min-height: 40px;
+  min-height: 32px;
   overflow: hidden;
 `;
 
