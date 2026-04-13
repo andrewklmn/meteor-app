@@ -7,7 +7,7 @@ export const Form = styled.form`
   flex-direction: row;
   margin: 0;
   width: 100%;
-  min-height: 36px;
+  min-height: 28px;
   border-top: 1px solid ${colors.borderLight};
   transition: background-color ${transitions.fast};
 
@@ -22,9 +22,15 @@ export const Form = styled.form`
 
 export const InputCell = styled.div`
   display: flex;
+  height: 28px;
   align-items: stretch;
   box-sizing: border-box;
   overflow: hidden;
+  border-right: 1px solid ${colors.borderLight};
+
+  &:last-child {
+    border-right: none;
+  }
 
   ${(props) => {
     if (props.date) return "width: 16%;";
@@ -39,7 +45,8 @@ export const InputCell = styled.div`
   & > input {
     box-sizing: border-box;
     width: 100%;
-    padding: 6px 4px;
+    height: 28px;
+    padding: 0 4px;
     border: none;
     border-right: 1px solid ${colors.borderLight};
     font-size: ${typography.small};

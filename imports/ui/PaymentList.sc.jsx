@@ -20,8 +20,8 @@ export const Container = styled.div`
 `;
 
 export const Title = styled.h3`
-  margin: 16px 0 0;
-  padding: 12px 16px;
+  margin: 0;
+  padding: 10px 16px;
   text-align: center;
   font-size: ${typography.h3};
   font-weight: 700;
@@ -118,7 +118,7 @@ export const EditorTaxHeader = styled(EditorDateHeader)`
 export const TableFooter = styled(LIB.FlexRow)`
   justify-content: flex-start;
   margin: 0;
-  min-height: 36px;
+  min-height: 28px;
   border-top: 1px solid ${colors.borderLight};
   background-color: ${colors.tableRowAlt};
 
@@ -130,11 +130,11 @@ export const TableFooter = styled(LIB.FlexRow)`
 const baseFooterCell = `
   display: flex;
   align-items: center;
-  padding: 8px 4px;
+  padding: 0px 4px;
   font-size: ${typography.small};
   color: ${colors.textPrimary};
   background-color: transparent;
-  min-height: 36px;
+  min-height: 28px;
   overflow: hidden;
 `;
 
@@ -143,9 +143,9 @@ export const FooterCell = styled.div`
 
   ${(props) => {
     if (props.comment)
-      return `width: 68%; padding-left: 8px; font-weight: 500; justify-content: flex-start;`;
+      return `width: 62%; padding-left: 8px; font-weight: 500; justify-content: flex-start;`;
     if (props.money && props.subtotal)
-      return `width: 12%; justify-content: flex-end; font-weight: 700;`;
+      return `width: 13%; justify-content: flex-end; font-weight: 700;`;
     if (props.money) return `width: 12%; justify-content: flex-end;`;
     if (props.tax)
       return `width: 13%; justify-content: flex-end; font-weight: 600;`;

@@ -160,13 +160,13 @@ export const PaymentList = ({
       <SC.TableFooter>
         <SC.FooterCell comment>Податків за {quarter}-й квартал:</SC.FooterCell>
         <SC.FooterCell money></SC.FooterCell>
+        <SC.FooterCell tax></SC.FooterCell>
         <SC.FooterCell tax>
           {(
             Math.round(taxSum * 100) / 100 +
             Math.round(warTaxSum * 100) / 100
           ).toFixed(2)}
         </SC.FooterCell>
-        <SC.FooterCell tax></SC.FooterCell>
       </SC.TableFooter>
 
       {quarter === 2 && (

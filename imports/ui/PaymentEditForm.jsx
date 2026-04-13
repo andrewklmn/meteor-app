@@ -100,9 +100,11 @@ export const PaymentEditForm = ({ payment, editable }) => {
     }
   };
 
-  const subtotal = Math.round(
-    (income - expence) * (editable ? 100 - taxPercent - getWarTaxPercent(date) : 100)
-  ) / 100;
+  const subtotal =
+    Math.round(
+      (income - expence) *
+        (editable ? 100 - taxPercent - getWarTaxPercent(date) : 100),
+    ) / 100;
   const tax = Math.round((income - expence) * taxPercent) / 100;
   const warTax = Math.round((income - expence) * getWarTaxPercent(date)) / 100;
 
@@ -173,17 +175,7 @@ export const PaymentEditForm = ({ payment, editable }) => {
               aria-label="Коментар"
             />
           </SC.InputCell>
-        ) : (
-          <SC.InputCell comment readonly>
-            <input
-              type="text"
-              className="comment disabled"
-              readOnly
-              value={comment}
-              aria-label="Коментар"
-            />
-          </SC.InputCell>
-        )}
+        ) : null}
         <SC.InputCell money readonly>
           <input
             type="text"
